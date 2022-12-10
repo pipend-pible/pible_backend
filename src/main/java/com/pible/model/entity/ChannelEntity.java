@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
@@ -14,6 +15,7 @@ import javax.persistence.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@DynamicInsert
 @DynamicUpdate
 @SequenceGenerator(allocationSize = 1, name = "channelSequence", sequenceName = "channel_sequence", schema = "pible")
 public class ChannelEntity extends BaseEntity{
@@ -26,11 +28,11 @@ public class ChannelEntity extends BaseEntity{
 
     //TODO 채널카테고리 현재는 단순 문자열이지만 추후에 테이블로 분리할수도
     private String category;
-    private String ownerName;
+    private String owner;
 
     //TODO 원작자정보 현재는 단순 문자열이지만 추후에 테이블로 분리할수도
     private String ownerInfo;
-    private Integer ageLimit;
+    private String ageLimit;
     private String apply;
 
 }

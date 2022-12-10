@@ -33,4 +33,5 @@ public class UserEntity extends BaseEntity{
     private String userState;
     private String bankAccountYn;
     private LocalDateTime deleteDate;
+    private String profileMsg;
 }

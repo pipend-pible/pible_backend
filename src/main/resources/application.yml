@@ -18,7 +18,8 @@ spring:
   config:
     activate:
       on-profile: local
-
+  jackson:
+    property-naming-strategy: SNAKE_CASE
 security:
   jwt:
     key: custom_sharing_planner_jwt_secret_key
