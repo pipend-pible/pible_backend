@@ -1,9 +1,7 @@
 package com.pible.common.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -12,6 +10,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "board", schema = "pible")
 @Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -26,8 +25,11 @@ public class BoardEntity extends BaseEntity{
     private Long id;
     private String title;
     private String content;
+    @ColumnDefault("0")
     private Integer likeCount;
+    @ColumnDefault("0")
     private Integer disLikeCount;
+    @ColumnDefault("0")
     private Integer hitCount;
     private String anonymousYn;
     private String displayYn;
@@ -53,5 +55,9 @@ public class BoardEntity extends BaseEntity{
         this.channelEntity = channelEntity;
         this.userEntity = userEntity;
         this.boardCategoryEntity = boardCategoryEntity;
+    }
+
+    public void like() {
+        this.likeCount += 1;
     }
 }

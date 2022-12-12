@@ -23,8 +23,8 @@ public class ChannelController {
         return channelService.saveChannel(channelDto);
     }
 
-    @PostMapping("/delete/{channelId}")
-    public boolean deleteChannel(@PathVariable @NotNull Long channelId) {
+    @PostMapping("/delete/{channel_id}")
+    public boolean deleteChannel(@PathVariable(value = "channel_id") @NotNull Long channelId) {
         return channelService.deleteChannel(channelId);
     }
 
