@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Getter
 @Builder
@@ -25,8 +26,7 @@ public class BoardDto {
     private String title;
     @NotEmpty
     private String content;
-    @NotEmpty
-    private String tag;
+    private List<String> tagList;
     @NotEmpty
     private String adult;
 

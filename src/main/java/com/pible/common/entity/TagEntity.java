@@ -23,12 +23,4 @@ public class TagEntity {
     @Column(name = "tag_id")
     private Long id;
     private String tag;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "fanart_id")
-    private FanartEntity fanartEntity;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "board_id")
-    private BoardEntity boardEntity;
 }

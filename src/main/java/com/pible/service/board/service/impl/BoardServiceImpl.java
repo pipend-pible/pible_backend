@@ -2,6 +2,7 @@ package com.pible.service.board.service.impl;
 
 import com.pible.common.entity.BoardEntity;
 import com.pible.common.entity.TagEntity;
+import com.pible.common.entity.TagMappingEntity;
 import com.pible.common.exception.CustomException;
 import com.pible.service.board.dao.BoardRepository;
 import com.pible.service.board.mapper.BoardMapper;
@@ -9,13 +10,16 @@ import com.pible.service.board.model.BoardDto;
 import com.pible.service.board.service.BoardService;
 import com.pible.service.category.board.dao.BoardCategoryRepository;
 import com.pible.service.channel.dao.ChannelRepository;
+import com.pible.service.mapping.dao.TagMappingRepository;
 import com.pible.service.tag.dao.TagRepository;
 import com.pible.service.user.dao.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.Hibernate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -25,6 +29,7 @@ public class BoardServiceImpl implements BoardService {
     private final UserRepository userRepository;
     private final TagRepository tagRepository;
     private final BoardCategoryRepository boardCategoryRepository;
+    private final TagMappingRepository tagMappingRepository;
     private final BoardMapper boardMapper = BoardMapper.INSTANCE;
 
     @Override
@@ -38,9 +43,20 @@ public class BoardServiceImpl implements BoardService {
                 boardCategoryRepository.getReferenceById(boardDto.getBoardCategoryId())
         );
 
-        return boardMapper.entityToDto(
-                boardRepository.save(boardEntity)
-        );
+        boardEntity = boardRepository.save(boardEntity);
+
+        for(String tag : boardDto.getTagList()) {
+            TagEntity tagEntity = tagRepository.findByTag(tag).orElseGet(
+                    () -> tagRepository.save(TagEntity.builder().tag(tag).build())
+            );
+
+            tagMappingRepository.save(TagMappingEntity.builder()
+                    .boardEntity(boardEntity)
+                    .tagEntity(tagEntity)
+                    .build());
+        }
+
+        return boardMapper.entityToDto(boardEntity);
     }
 
     @Override
@@ -67,9 +83,13 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public List<BoardDto> getBoardListByTag(String tag) {
-        TagEntity tagEntity = tagRepository.findByTag(tag).orElseThrow(() -> new CustomException(""));
-
-
-        return null;
+        return tagMappingRepository.findAllByTagEntity(
+                tagRepository.findByTag(tag).orElseThrow(() -> new CustomException("")))
+                .stream()
+                .map((tagMappingEntity -> {
+                    BoardEntity boardEntity = tagMappingEntity.getBoardEntity();
+                    Hibernate.initialize(boardEntity);
+                    return boardMapper.entityToDto(boardEntity);
+                })).collect(Collectors.toList());
     }
 }
