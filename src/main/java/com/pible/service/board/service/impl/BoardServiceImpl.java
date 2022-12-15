@@ -2,7 +2,7 @@ package com.pible.service.board.service.impl;
 
 import com.pible.common.entity.BoardEntity;
 import com.pible.common.entity.TagEntity;
-import com.pible.common.entity.TagMappingEntity;
+import com.pible.common.entity.BoradTagMappingEntity;
 import com.pible.common.exception.CustomException;
 import com.pible.service.board.dao.BoardRepository;
 import com.pible.service.board.mapper.BoardMapper;
@@ -10,7 +10,7 @@ import com.pible.service.board.model.BoardDto;
 import com.pible.service.board.service.BoardService;
 import com.pible.service.category.board.dao.BoardCategoryRepository;
 import com.pible.service.channel.dao.ChannelRepository;
-import com.pible.service.mapping.dao.TagMappingRepository;
+import com.pible.service.mapping.dao.BoardTagMappingRepository;
 import com.pible.service.tag.dao.TagRepository;
 import com.pible.service.user.dao.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +29,7 @@ public class BoardServiceImpl implements BoardService {
     private final UserRepository userRepository;
     private final TagRepository tagRepository;
     private final BoardCategoryRepository boardCategoryRepository;
-    private final TagMappingRepository tagMappingRepository;
+    private final BoardTagMappingRepository boardTagMappingRepository;
     private final BoardMapper boardMapper = BoardMapper.INSTANCE;
 
     @Override
@@ -50,7 +50,7 @@ public class BoardServiceImpl implements BoardService {
                     () -> tagRepository.save(TagEntity.builder().tag(tag).build())
             );
 
-            tagMappingRepository.save(TagMappingEntity.builder()
+            boardTagMappingRepository.save(BoradTagMappingEntity.builder()
                     .boardEntity(boardEntity)
                     .tagEntity(tagEntity)
                     .build());
@@ -83,11 +83,11 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public List<BoardDto> getBoardListByTag(String tag) {
-        return tagMappingRepository.findAllByTagEntity(
+        return boardTagMappingRepository.findAllByTagEntity(
                 tagRepository.findByTag(tag).orElseThrow(() -> new CustomException("")))
                 .stream()
-                .map((tagMappingEntity -> {
-                    BoardEntity boardEntity = tagMappingEntity.getBoardEntity();
+                .map((boradTagMappingEntity -> {
+                    BoardEntity boardEntity = boradTagMappingEntity.getBoardEntity();
                     Hibernate.initialize(boardEntity);
                     return boardMapper.entityToDto(boardEntity);
                 })).collect(Collectors.toList());

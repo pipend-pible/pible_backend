@@ -16,7 +16,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @DynamicUpdate
 @SequenceGenerator(allocationSize = 1, name = "tagMappingSequence", sequenceName = "tag_mapping_sequence", schema = "pible")
-public class TagMappingEntity {
+public class FanartTagMappingEntity {
 
     @Id
     @GeneratedValue(generator = "tagMappingSequence")
@@ -31,7 +31,4 @@ public class TagMappingEntity {
     @JoinColumn(name = "fanart_id")
     private FanartEntity fanartEntity;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "board_id")
-    private BoardEntity boardEntity;
 }
