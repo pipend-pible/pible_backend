@@ -42,4 +42,10 @@ public class FanartEntity extends BaseEntity{
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fanart_category_id")
     private FanartCategoryEntity fanartCategoryEntity;
+
+    public void setRelation(ChannelEntity channelEntity, UserEntity userEntity, FanartCategoryEntity fanartCategoryEntity) {
+        this.channelEntity = channelEntity;
+        this.userEntity = userEntity;
+        this.fanartCategoryEntity = fanartCategoryEntity;
+    }
 }
