@@ -34,10 +34,6 @@ public class BoardEntity extends BaseEntity{
     private String anonymousYn;
     private String displayYn;
     private String adultYn;
-//
-//    @Builder.Default
-//    @OneToMany(mappedBy = "boardEntity", fetch = FetchType.LAZY)
-//    private List<CommentEntity> commentEntityList = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "channel_id")

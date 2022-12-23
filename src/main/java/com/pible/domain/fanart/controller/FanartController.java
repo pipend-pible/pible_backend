@@ -21,8 +21,8 @@ public class FanartController {
         return fanartService.saveFanart(fanartDto);
     }
 
-    @GetMapping("/{fanart_id}")
-    public FanartRes getFanart(@PathVariable(value = "fanart_id") @Valid Long fanartId) {
+    @GetMapping("/{fanartId}")
+    public FanartRes getFanart(@PathVariable Long fanartId) {
         return fanartService.getFanart(fanartId);
     }
 

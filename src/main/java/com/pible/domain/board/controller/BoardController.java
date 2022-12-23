@@ -23,23 +23,23 @@ public class BoardController {
         return boardService.saveBoard(boardDto);
     }
 
-    @GetMapping("/{board_id}")
-    public BoardRes getBoard(@PathVariable(value = "board_id") Long boardId){
+    @GetMapping("/{boardId}")
+    public BoardRes getBoard(@PathVariable Long boardId){
         return boardService.getBoard(boardId);
     }
 
-    @PostMapping("/delete/{board_id}")
-    public boolean deleteBoard(@PathVariable(value = "board_id") Long boardId){
+    @PostMapping("/delete/{boardId}")
+    public boolean deleteBoard(@PathVariable Long boardId){
         return boardService.deleteBoard(boardId);
     }
 
-    @PostMapping("/modify/{board_id}")
-    public BoardRes modifyBoard(@PathVariable(value = "board_id") Long boardId, @RequestBody @Valid BoardDto boardDto){
+    @PostMapping("/modify/{boardId}")
+    public BoardRes modifyBoard(@PathVariable Long boardId, @RequestBody @Valid BoardDto boardDto){
         return boardService.modifyBoard(boardId, boardDto);
     }
 
-    @PostMapping("/like/{board_id}")
-    public boolean increaseLikeCountOfBoard(@PathVariable(value = "board_id") Long boardId){
+    @PostMapping("/like/{boardId}")
+    public boolean increaseLikeCountOfBoard(@PathVariable Long boardId){
         return boardService.increaseLikeCountOfBoard(boardId);
     }
 
@@ -48,8 +48,8 @@ public class BoardController {
         return boardService.getBoardListByTag(tag);
     }
 
-    @PostMapping("/claim/{board_id}")
-    public boolean claimBoard(@PathVariable(value = "board_id") Long boardId, @RequestBody BoardClaimDto boardClaimDto){
+    @PostMapping("/claim/{boardId}")
+    public boolean claimBoard(@PathVariable Long boardId, @RequestBody BoardClaimDto boardClaimDto){
         return boardService.claimBoard(boardId, boardClaimDto);
     }
 }

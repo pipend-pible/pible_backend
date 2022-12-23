@@ -2,6 +2,7 @@ package com.pible.domain.channel.controller;
 
 import com.pible.domain.channel.model.ChannelDto;
 import com.pible.domain.channel.model.ChannelRes;
+import com.pible.domain.channel.model.ContentRes;
 import com.pible.domain.channel.service.ChannelService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,13 +24,23 @@ public class ChannelController {
         return channelService.saveChannel(channelDto);
     }
 
-    @PostMapping("/delete/{channel_id}")
-    public boolean deleteChannel(@PathVariable(value = "channel_id") @NotNull Long channelId) {
+    @PostMapping("/delete/{channelId}")
+    public boolean deleteChannel(@PathVariable Long channelId) {
         return channelService.deleteChannel(channelId);
+    }
+
+    @GetMapping("/{channelId}")
+    public ChannelRes getChannel(@PathVariable Long channelId) {
+        return channelService.getChannel(channelId);
     }
 
     @GetMapping("/list")
     public List<ChannelRes> getChannels() {
         return channelService.getChannels();
+    }
+
+    @GetMapping("/{channelId}/contents")
+    public List<ContentRes> getChannelContents(@PathVariable Long channelId) {
+        return channelService.getChannelContents(channelId);
     }
 }
