@@ -1,4 +1,4 @@
-package com.pible.config;
+package com.pible.config.database;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.context.annotation.Bean;

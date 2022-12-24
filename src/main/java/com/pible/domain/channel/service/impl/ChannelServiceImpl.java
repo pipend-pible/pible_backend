@@ -1,14 +1,15 @@
 package com.pible.domain.channel.service.impl;
 
+import com.pible.common.entity.ChannelEntity;
+import com.pible.common.exception.CustomException;
 import com.pible.domain.board.dao.BoardRepository;
+import com.pible.domain.board.model.BoardDto;
 import com.pible.domain.channel.dao.ChannelRepository;
 import com.pible.domain.channel.mapper.ChannelMapper;
+import com.pible.domain.channel.model.BoardContentRes;
 import com.pible.domain.channel.model.ChannelDto;
 import com.pible.domain.channel.model.ChannelRes;
-import com.pible.domain.channel.model.ContentRes;
 import com.pible.domain.channel.service.ChannelService;
-import com.pible.common.exception.CustomException;
-import com.pible.common.entity.ChannelEntity;
 import com.pible.domain.fanart.dao.FanartRepository;
 import com.pible.domain.user.dao.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -58,11 +59,10 @@ public class ChannelServiceImpl implements ChannelService {
     }
 
     @Override
-    public List<ContentRes> getChannelContents(Long channelId) {
-        ChannelEntity channelEntity = channelRepository.findById(channelId).orElseThrow(() -> new CustomException(""));
-
-        List<ContentRes> boardContentResList = boardRepository.findAllByChannel(channelEntity.getId());
-
-        return null;
+    public List<BoardContentRes> getChannelContents(Long channelId, BoardDto boardDto) {
+        return boardRepository.selectBoardContents(
+                channelRepository.findById(channelId).orElseThrow(() -> new CustomException("")).getId(),
+                boardDto
+        );
     }
 }

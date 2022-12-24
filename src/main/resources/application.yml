@@ -10,6 +10,7 @@ spring:
         format_sql: true
     hibernate:
       ddl-auto: none
+    database-platform: com.pible.config.database.CustomPGDialect
   datasource:
     driver-class-name: org.postgresql.Driver
     username: postgres
