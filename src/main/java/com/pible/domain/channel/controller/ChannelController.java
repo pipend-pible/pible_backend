@@ -1,9 +1,9 @@
 package com.pible.domain.channel.controller;
 
 import com.pible.domain.board.model.BoardDto;
-import com.pible.domain.channel.model.BoardContentRes;
 import com.pible.domain.channel.model.ChannelDto;
 import com.pible.domain.channel.model.ChannelRes;
+import com.pible.domain.channel.model.ContentRes;
 import com.pible.domain.channel.service.ChannelService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -40,7 +40,7 @@ public class ChannelController {
     }
 
     @GetMapping("/{channelId}/contents")
-    public List<BoardContentRes> getChannelContents(@PathVariable Long channelId, BoardDto boardDto) {
+    public List<? extends ContentRes> getChannelContents(@PathVariable Long channelId, BoardDto boardDto) {
         return channelService.getChannelContents(channelId, boardDto);
     }
 }

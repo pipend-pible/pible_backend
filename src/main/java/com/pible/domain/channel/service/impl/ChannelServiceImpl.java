@@ -9,6 +9,7 @@ import com.pible.domain.channel.mapper.ChannelMapper;
 import com.pible.domain.channel.model.BoardContentRes;
 import com.pible.domain.channel.model.ChannelDto;
 import com.pible.domain.channel.model.ChannelRes;
+import com.pible.domain.channel.model.ContentRes;
 import com.pible.domain.channel.service.ChannelService;
 import com.pible.domain.fanart.dao.FanartRepository;
 import com.pible.domain.user.dao.UserRepository;
@@ -59,7 +60,7 @@ public class ChannelServiceImpl implements ChannelService {
     }
 
     @Override
-    public List<BoardContentRes> getChannelContents(Long channelId, BoardDto boardDto) {
+    public List<? extends ContentRes> getChannelContents(Long channelId, BoardDto boardDto) {
         return boardRepository.selectBoardContents(
                 channelRepository.findById(channelId).orElseThrow(() -> new CustomException("")).getId(),
                 boardDto
