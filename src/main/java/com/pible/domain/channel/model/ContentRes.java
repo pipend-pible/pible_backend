@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
@@ -22,10 +23,11 @@ public class ContentRes {
     private Integer likeCount;
     private Integer hitCount;
     private List<String> tagList;
-    private String createDate;
+    private LocalDateTime createDate;
 
     public ContentRes(Long channelId, String category, String title, Long userId,
-                      String userEmail, String userNickName, Integer likeCount, Integer hitCount, String delimitedTagList) {
+                      String userEmail, String userNickName, Integer likeCount, Integer hitCount, String delimitedTagList,
+                      LocalDateTime createDate) {
         this.channelId = channelId;
         this.category = category;
         this.title = title;
@@ -35,5 +37,6 @@ public class ContentRes {
         this.likeCount = likeCount;
         this.hitCount = hitCount;
         this.tagList = Arrays.asList(delimitedTagList.split(","));
+        this.createDate = createDate;
     }
 }
