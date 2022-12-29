@@ -4,6 +4,8 @@ import com.pible.common.entity.*;
 import com.pible.common.exception.CustomException;
 import com.pible.domain.category.fanart.dao.FanartCategoryRepository;
 import com.pible.domain.channel.dao.ChannelRepository;
+import com.pible.domain.channel.model.ContentDto;
+import com.pible.domain.channel.model.FanartContentRes;
 import com.pible.domain.fanart.dao.FanartRepository;
 import com.pible.domain.fanart.mapper.FanartMapper;
 import com.pible.domain.fanart.model.FanartDto;
@@ -15,6 +17,8 @@ import com.pible.domain.user.dao.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -60,5 +64,10 @@ public class FanartServiceImpl implements FanartService {
         return fanartMapper.entityToFanartRes(
                 fanartRepository.findById(fanartId).orElseThrow(() -> new CustomException(""))
         );
+    }
+
+    @Override
+    public List<FanartContentRes> getFanartList(ContentDto contentDto) {
+        return fanartRepository.selectFanartContents(null, contentDto);
     }
 }

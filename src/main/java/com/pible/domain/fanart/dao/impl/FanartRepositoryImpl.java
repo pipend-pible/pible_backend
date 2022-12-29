@@ -47,7 +47,6 @@ public class FanartRepositoryImpl extends QuerydslRepositorySupport implements C
                 )
                 .from(fanartEntity)
                 .join(fanartEntity.channelEntity, channelEntity)
-                    .on(channelEntity.id.eq(channelId))
                 .join(fanartEntity.userEntity, userEntity)
                 .leftJoin(fanartTagMappingEntity)
                     .on(fanartTagMappingEntity.fanartEntity.eq(fanartEntity))
@@ -56,7 +55,8 @@ public class FanartRepositoryImpl extends QuerydslRepositorySupport implements C
                 .where(
                         contains(fanartEntity.title, contentDto.getTitle()),
                         eq(userEntity.id, contentDto.getUserId()),
-                        containsList(tagEntity.tag, contentDto.getTagList())
+                        containsList(tagEntity.tag, contentDto.getTagList()),
+                        eq(channelEntity.id, channelId)
                 )
                 .groupBy(channelEntity.id, fanartEntity.id, channelEntity.category, fanartEntity.title, userEntity.id,
                         userEntity.email, userEntity.nickName, fanartEntity.likeCount, fanartEntity.hitCount)

@@ -1,5 +1,7 @@
 package com.pible.domain.fanart.controller;
 
+import com.pible.domain.channel.model.ContentDto;
+import com.pible.domain.channel.model.FanartContentRes;
 import com.pible.domain.fanart.model.FanartDto;
 import com.pible.domain.fanart.model.FanartRes;
 import com.pible.domain.fanart.service.FanartService;
@@ -8,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -26,4 +29,8 @@ public class FanartController {
         return fanartService.getFanart(fanartId);
     }
 
+    @GetMapping("/list")
+    public List<FanartContentRes> getFanartList(@RequestBody @Valid ContentDto contentDto) {
+        return fanartService.getFanartList(contentDto);
+    }
 }
