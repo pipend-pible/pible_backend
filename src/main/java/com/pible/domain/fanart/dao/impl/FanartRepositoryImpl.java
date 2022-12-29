@@ -1,65 +1,65 @@
 package com.pible.domain.fanart.dao.impl;
 
 import com.pible.common.entity.BoardEntity;
+import com.pible.common.entity.FanartEntity;
+import com.pible.domain.channel.model.ContentDto;
 import com.pible.domain.channel.model.FanartContentRes;
 import com.pible.domain.fanart.dao.custom.CustomFanartRepository;
 import com.pible.domain.fanart.model.FanartDto;
 import com.querydsl.core.types.Projections;
-import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
-import org.springframework.util.CollectionUtils;
-import org.springframework.util.StringUtils;
-import static com.pible.common.querydsl.BooleanExpressionUtil.*;
 
 import java.util.List;
 
-import static com.pible.common.entity.QBoardEntity.boardEntity;
-import static com.pible.common.entity.QBoradTagMappingEntity.boradTagMappingEntity;
+import static com.pible.common.entity.QFanartEntity.fanartEntity;
+import static com.pible.common.entity.QFanartTagMappingEntity.fanartTagMappingEntity;
 import static com.pible.common.entity.QChannelEntity.channelEntity;
 import static com.pible.common.entity.QTagEntity.tagEntity;
 import static com.pible.common.entity.QUserEntity.userEntity;
+import static com.pible.common.querydsl.BooleanExpressionUtil.*;
 
 public class FanartRepositoryImpl extends QuerydslRepositorySupport implements CustomFanartRepository {
     private final JPAQueryFactory queryFactory;
 
     public FanartRepositoryImpl(JPAQueryFactory queryFactory) {
-        super(BoardEntity.class);
+        super(FanartEntity.class);
         this.queryFactory = queryFactory;
     }
 
     @Override
-    public List<FanartContentRes> selectFanartContents(Long channelId, FanartDto fanartDto) {
+    public List<FanartContentRes> selectFanartContents(Long channelId, ContentDto contentDto) {
         return queryFactory.select(
                 Projections.constructor(FanartContentRes.class,
                         channelEntity.id,
                         channelEntity.category,
-                        boardEntity.title,
+                        fanartEntity.title,
                         userEntity.id,
                         userEntity.email,
                         userEntity.nickName,
-                        boardEntity.likeCount,
-                        boardEntity.hitCount,
+                        fanartEntity.likeCount,
+                        fanartEntity.hitCount,
                         Expressions.stringTemplate("string_agg({0}, {1})", tagEntity.tag, ",").as("tagList"),
-                        boardEntity.id
+                        fanartEntity.createDate,
+                        fanartEntity.id
                     )
                 )
-                .from(boardEntity)
-                .join(boardEntity.channelEntity, channelEntity)
+                .from(fanartEntity)
+                .join(fanartEntity.channelEntity, channelEntity)
                     .on(channelEntity.id.eq(channelId))
-                .join(boardEntity.userEntity, userEntity)
-                .leftJoin(boradTagMappingEntity)
-                    .on(boradTagMappingEntity.boardEntity.eq(boardEntity))
+                .join(fanartEntity.userEntity, userEntity)
+                .leftJoin(fanartTagMappingEntity)
+                    .on(fanartTagMappingEntity.fanartEntity.eq(fanartEntity))
                 .leftJoin(tagEntity)
-                    .on(boradTagMappingEntity.tagEntity.eq(tagEntity))
+                    .on(fanartTagMappingEntity.tagEntity.eq(tagEntity))
                 .where(
-                        contains(boardEntity.title, fanartDto.getTitle()),
-                        eq(userEntity.id, fanartDto.getUserId()),
-                        containsList(tagEntity.tag, fanartDto.getTagList())
+                        contains(fanartEntity.title, contentDto.getTitle()),
+                        eq(userEntity.id, contentDto.getUserId()),
+                        containsList(tagEntity.tag, contentDto.getTagList())
                 )
-                .groupBy(channelEntity.id, boardEntity.id, channelEntity.category, boardEntity.title, userEntity.id,
-                        userEntity.email, userEntity.nickName, boardEntity.likeCount, boardEntity.hitCount)
+                .groupBy(channelEntity.id, fanartEntity.id, channelEntity.category, fanartEntity.title, userEntity.id,
+                        userEntity.email, userEntity.nickName, fanartEntity.likeCount, fanartEntity.hitCount)
                 .fetch();
     }
 

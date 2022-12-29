@@ -22,6 +22,7 @@ public class ContentRes {
     private Integer likeCount;
     private Integer hitCount;
     private List<String> tagList;
+    private String createDate;
 
     public ContentRes(Long channelId, String category, String title, Long userId,
                       String userEmail, String userNickName, Integer likeCount, Integer hitCount, String delimitedTagList) {

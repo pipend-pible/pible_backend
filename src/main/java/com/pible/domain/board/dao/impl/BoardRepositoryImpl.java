@@ -4,6 +4,7 @@ import com.pible.common.entity.BoardEntity;
 import com.pible.domain.board.dao.custom.CustomBoardRepository;
 import com.pible.domain.board.model.BoardDto;
 import com.pible.domain.channel.model.BoardContentRes;
+import com.pible.domain.channel.model.ContentDto;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
@@ -29,7 +30,7 @@ public class BoardRepositoryImpl extends QuerydslRepositorySupport implements Cu
     }
 
     @Override
-    public List<BoardContentRes> selectBoardContents(Long channelId, BoardDto boardDto) {
+    public List<BoardContentRes> selectBoardContents(Long channelId, ContentDto contentDto) {
         return queryFactory.select(
                 Projections.constructor(BoardContentRes.class,
                         channelEntity.id,
@@ -41,6 +42,7 @@ public class BoardRepositoryImpl extends QuerydslRepositorySupport implements Cu
                         boardEntity.likeCount,
                         boardEntity.hitCount,
                         Expressions.stringTemplate("string_agg({0}, {1})", tagEntity.tag, ",").as("tagList"),
+                        boardEntity.createDate,
                         boardEntity.id
                     )
                 )
@@ -53,10 +55,10 @@ public class BoardRepositoryImpl extends QuerydslRepositorySupport implements Cu
                 .leftJoin(tagEntity)
                     .on(boradTagMappingEntity.tagEntity.eq(tagEntity))
                 .where(
-                        containsTitle(boardDto.getTitle()),
-                        isAnonymous(boardDto.getBoardAnonymous()),
-                        eqUserId(boardDto.getUserId()),
-                        containsTags(boardDto.getTagList())
+                        containsTitle(contentDto.getTitle()),
+                        isAnonymous(contentDto.getBoardAnonymous()),
+                        eqUserId(contentDto.getUserId()),
+                        containsTags(contentDto.getTagList())
                 )
                 .groupBy(channelEntity.id, boardEntity.id, channelEntity.category, boardEntity.title, userEntity.id,
                         userEntity.email, userEntity.nickName, boardEntity.likeCount, boardEntity.hitCount)
