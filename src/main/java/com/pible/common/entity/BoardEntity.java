@@ -31,8 +31,11 @@ public class BoardEntity extends BaseEntity{
     private Integer disLikeCount;
     @ColumnDefault("0")
     private Integer hitCount;
+    @ColumnDefault("'N'")
     private String anonymousYn;
+    @ColumnDefault("'N'")
     private String displayYn;
+    @ColumnDefault("'N'")
     private String adultYn;
 
     @ManyToOne(fetch = FetchType.LAZY)

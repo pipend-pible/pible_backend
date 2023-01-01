@@ -26,7 +26,7 @@ public class FanartDto {
     private String content;
     private List<String> tagList;
     @NotEmpty
-    private String adult;
+    private String adultYn;
     private String imgName;
 
 //     TODO 논의대상

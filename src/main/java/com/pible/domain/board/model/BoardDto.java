@@ -21,13 +21,13 @@ public class BoardDto {
     @NotNull
     private Long boardCategoryId;
     @NotEmpty
-    private String boardAnonymous;
+    private String anonymousYn;
     @NotEmpty
     private String title;
     @NotEmpty
     private String content;
-    private List<String> tagList;
     @NotEmpty
-    private String adult;
+    private String adultYn;
+    private List<String> tagList;
 
 }

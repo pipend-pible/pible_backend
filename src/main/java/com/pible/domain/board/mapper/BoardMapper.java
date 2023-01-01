@@ -9,11 +9,14 @@ import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 
-// TODO 매핑정보 수정
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface BoardMapper extends GenericMapper<BoardEntity, BoardDto> {
     BoardMapper INSTANCE = Mappers.getMapper(BoardMapper.class);
 
     @Mapping(source = "id", target = "boardId")
+    @Mapping(source = "userEntity", target = "userId", qualifiedByName = "userEntityToId")
+    @Mapping(source = "channelEntity", target = "channelId", qualifiedByName = "channelEntityToId")
+    @Mapping(source = "boardCategoryEntity", target = "boardCategoryId", qualifiedByName = "boardCategoryEntityToId")
     BoardRes entityToBoardRes(BoardEntity entity);
+
 }

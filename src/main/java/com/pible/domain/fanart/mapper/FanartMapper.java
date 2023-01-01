@@ -13,6 +13,9 @@ import org.mapstruct.factory.Mappers;
 public interface FanartMapper extends GenericMapper<FanartEntity, FanartDto> {
     FanartMapper INSTANCE = Mappers.getMapper(FanartMapper.class);
     @Mapping(source = "id", target = "fanartId")
+    @Mapping(source = "userEntity", target = "userId", qualifiedByName = "userEntityToId")
+    @Mapping(source = "channelEntity", target = "channelId", qualifiedByName = "channelEntityToId")
+    @Mapping(source = "boardCategoryEntity", target = "boardCategoryId", qualifiedByName = "boardCategoryEntityToId")
     FanartRes entityToFanartRes(FanartEntity entity);
 
 }
