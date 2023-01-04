@@ -1,7 +1,10 @@
 package com.pible.domain.comment.service.impl;
 
+import com.pible.common.entity.CommentEntity;
+import com.pible.common.exception.CustomException;
 import com.pible.domain.board.dao.BoardRepository;
 import com.pible.domain.comment.dao.CommentRepository;
+import com.pible.domain.comment.mapper.CommentMapper;
 import com.pible.domain.comment.model.CommentDto;
 import com.pible.domain.comment.model.CommentRes;
 import com.pible.domain.comment.service.CommentService;
@@ -17,11 +20,37 @@ public class CommentServiceImpl implements CommentService {
     private final CommentRepository commentRepository;
     private final BoardRepository boardRepository;
     private final FanartRepository fanartRepository;
-
+    private final CommentMapper commentMapper = CommentMapper.INSTANCE;
     @Override
     public CommentRes createComment(CommentDto commentDto) {
+        return commentMapper.entityToCommentRes(
+                commentRepository.save(
+                        commentMapper.dtoToEntity(commentDto)
+                )
+        );
+    }
 
+    @Override
+    public CommentRes likeComment(Long commentId) {
+        CommentEntity commentEntity = commentRepository.findById(commentId).orElseThrow(() -> new CustomException(""));
+        commentEntity.like();
 
-        return null;
+        return commentMapper.entityToCommentRes(commentEntity);
+    }
+
+    @Override
+    public boolean deleteComment(Long commentId) {
+        CommentEntity commentEntity = commentRepository.findById(commentId).orElseThrow(() -> new CustomException(""));
+        commentEntity.delete();
+
+        return true;
+    }
+
+    @Override
+    public boolean modifyComment(CommentDto commentDto) {
+        CommentEntity commentEntity = commentRepository.findById(commentDto.getBoardId()).orElseThrow(() -> new CustomException(""));
+        commentMapper.updateFromDto(commentDto, commentEntity);
+
+        return true;
     }
 }

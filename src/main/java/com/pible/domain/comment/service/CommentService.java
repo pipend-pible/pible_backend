@@ -5,5 +5,7 @@ import com.pible.domain.comment.model.CommentRes;
 
 public interface CommentService {
     CommentRes createComment(CommentDto commentDto);
-
+    CommentRes likeComment(Long commentId);
+    boolean deleteComment(Long commentId);
+    boolean modifyComment(CommentDto commentDto);
 }

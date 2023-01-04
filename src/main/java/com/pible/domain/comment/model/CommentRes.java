@@ -9,6 +9,8 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CommentRes {
-    
+public class CommentRes extends CommentDto {
+    private Long commentId;
+    private Integer likeCount;
+    private Integer claimCount;
 }

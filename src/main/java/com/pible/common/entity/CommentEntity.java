@@ -3,6 +3,7 @@ package com.pible.common.entity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
@@ -21,8 +22,11 @@ public class CommentEntity extends BaseEntity{
     @Column(name = "comment_id")
     private Long id;
     private String content;
+    @ColumnDefault("'N'")
     private String anonymousYn;
+    @ColumnDefault("0")
     private Integer likeCount;
+    @ColumnDefault("0")
     private Integer claimCount;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -33,4 +37,11 @@ public class CommentEntity extends BaseEntity{
     @JoinColumn(name = "fanart_id")
     private FanartEntity fanartEntity;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private UserEntity userEntity;
+
+    public void like() {
+        this.likeCount += 1;
+    }
 }
