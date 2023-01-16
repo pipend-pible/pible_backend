@@ -2,17 +2,21 @@ package com.pible.common.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "comment", schema = "pible")
+@Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@DynamicInsert
 @DynamicUpdate
 @SequenceGenerator(allocationSize = 1, name = "commentSequence", sequenceName = "comment_sequence", schema = "pible")
 public class CommentEntity extends BaseEntity{

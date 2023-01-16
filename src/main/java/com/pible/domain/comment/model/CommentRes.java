@@ -11,6 +11,7 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 public class CommentRes extends CommentDto {
     private Long commentId;
+    private Long userId;
     private Integer likeCount;
     private Integer claimCount;
 }

@@ -15,7 +15,5 @@ public interface CommentMapper extends GenericMapper<CommentEntity, CommentDto> 
 
     @Mapping(source = "id", target = "commentId")
     @Mapping(source = "userEntity", target = "userId", qualifiedByName = "userEntityToId")
-    @Mapping(source = "channelEntity", target = "channelId", qualifiedByName = "channelEntityToId")
-    @Mapping(source = "boardCategoryEntity", target = "boardCategoryId", qualifiedByName = "boardCategoryEntityToId")
     CommentRes entityToCommentRes(CommentEntity entity);
 }

@@ -15,7 +15,7 @@ public interface FanartMapper extends GenericMapper<FanartEntity, FanartDto> {
     @Mapping(source = "id", target = "fanartId")
     @Mapping(source = "userEntity", target = "userId", qualifiedByName = "userEntityToId")
     @Mapping(source = "channelEntity", target = "channelId", qualifiedByName = "channelEntityToId")
-    @Mapping(source = "boardCategoryEntity", target = "boardCategoryId", qualifiedByName = "boardCategoryEntityToId")
+    @Mapping(source = "fanartCategoryEntity", target = "fanartCategoryId", qualifiedByName = "fanartCategoryEntityToId")
     FanartRes entityToFanartRes(FanartEntity entity);
 
 }

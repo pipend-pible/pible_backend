@@ -10,7 +10,6 @@ import javax.persistence.*;
 @Entity
 @Table(name = "board", schema = "pible")
 @Getter
-@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
