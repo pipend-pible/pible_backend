@@ -1,7 +1,8 @@
 package com.pible.domain.fanart.service.impl;
 
 import com.pible.common.entity.*;
-import com.pible.common.exception.CustomException;
+import com.pible.common.enums.ResponseCode;
+import com.pible.common.exception.BusinessException;
 import com.pible.domain.category.fanart.dao.FanartCategoryRepository;
 import com.pible.domain.channel.dao.ChannelRepository;
 import com.pible.domain.channel.model.ContentDto;
@@ -62,7 +63,7 @@ public class FanartServiceImpl implements FanartService {
     @Override
     public FanartRes getFanart(Long fanartId) {
         return fanartMapper.entityToFanartRes(
-                fanartRepository.findById(fanartId).orElseThrow(() -> new CustomException(""))
+                fanartRepository.findById(fanartId).orElseThrow(() -> new BusinessException(ResponseCode.NO_DATA))
         );
     }
 

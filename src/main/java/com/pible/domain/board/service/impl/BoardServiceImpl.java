@@ -4,7 +4,8 @@ import com.pible.common.entity.BoardClaimEntity;
 import com.pible.common.entity.BoardEntity;
 import com.pible.common.entity.TagEntity;
 import com.pible.common.entity.BoradTagMappingEntity;
-import com.pible.common.exception.CustomException;
+import com.pible.common.enums.ResponseCode;
+import com.pible.common.exception.BusinessException;
 import com.pible.domain.board.dao.BoardRepository;
 import com.pible.domain.board.mapper.BoardMapper;
 import com.pible.domain.board.model.BoardDto;
@@ -68,21 +69,21 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public BoardRes getBoard(Long boardId) {
         return boardMapper.entityToBoardRes(
-                boardRepository.findById(boardId).orElseThrow(() -> new CustomException(""))
+                boardRepository.findById(boardId).orElseThrow(() -> new BusinessException(ResponseCode.NO_DATA))
         );
     }
 
     @Override
     @Transactional
     public boolean deleteBoard(Long boardId) {
-        boardRepository.findById(boardId).orElseThrow(() -> new CustomException("")).delete();
+        boardRepository.findById(boardId).orElseThrow(() -> new BusinessException(ResponseCode.NO_DATA)).delete();
         return true;
     }
 
     @Override
     @Transactional
     public BoardRes modifyBoard(Long boardId, BoardDto boardDto) {
-        BoardEntity boardEntity = boardRepository.findById(boardId).orElseThrow(() -> new CustomException(""));
+        BoardEntity boardEntity = boardRepository.findById(boardId).orElseThrow(() -> new BusinessException(ResponseCode.NO_DATA));
         boardMapper.updateFromDto(boardDto, boardEntity);
         return boardMapper.entityToBoardRes(boardEntity);
     }
@@ -90,14 +91,14 @@ public class BoardServiceImpl implements BoardService {
     @Override
     @Transactional
     public boolean increaseLikeCountOfBoard(Long boardId) {
-        boardRepository.findById(boardId).orElseThrow(() -> new CustomException("")).like();
+        boardRepository.findById(boardId).orElseThrow(() -> new BusinessException(ResponseCode.NO_DATA)).like();
         return true;
     }
 
     @Override
     public List<BoardRes> getBoardListByTag(String tag) {
         return boardTagMappingRepository.findAllByTagEntity(
-                tagRepository.findByTag(tag).orElseThrow(() -> new CustomException("")))
+                tagRepository.findByTag(tag).orElseThrow(() -> new BusinessException(ResponseCode.NO_DATA)))
                 .stream()
                 .map((boardTagMappingEntity -> {
                     BoardEntity boardEntity = boardTagMappingEntity.getBoardEntity();
@@ -108,7 +109,7 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public boolean claimBoard(Long boardId, BoardClaimDto boardClaimDto) {
-        BoardEntity boardEntity = boardRepository.findById(boardId).orElseThrow(() -> new CustomException(""));
+        BoardEntity boardEntity = boardRepository.findById(boardId).orElseThrow(() -> new BusinessException(ResponseCode.NO_DATA));
 
         boardClaimRepository.save(BoardClaimEntity.builder()
                 .claimReason(boardClaimDto.getClaimReason())

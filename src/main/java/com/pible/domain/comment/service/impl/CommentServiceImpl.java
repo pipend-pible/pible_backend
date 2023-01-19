@@ -1,7 +1,8 @@
 package com.pible.domain.comment.service.impl;
 
 import com.pible.common.entity.CommentEntity;
-import com.pible.common.exception.CustomException;
+import com.pible.common.enums.ResponseCode;
+import com.pible.common.exception.BusinessException;
 import com.pible.domain.board.dao.BoardRepository;
 import com.pible.domain.comment.dao.CommentRepository;
 import com.pible.domain.comment.mapper.CommentMapper;
@@ -32,7 +33,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public CommentRes likeComment(Long commentId) {
-        CommentEntity commentEntity = commentRepository.findById(commentId).orElseThrow(() -> new CustomException(""));
+        CommentEntity commentEntity = commentRepository.findById(commentId).orElseThrow(() -> new BusinessException(ResponseCode.NO_DATA));
         commentEntity.like();
 
         return commentMapper.entityToCommentRes(commentEntity);
@@ -40,7 +41,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public boolean deleteComment(Long commentId) {
-        CommentEntity commentEntity = commentRepository.findById(commentId).orElseThrow(() -> new CustomException(""));
+        CommentEntity commentEntity = commentRepository.findById(commentId).orElseThrow(() -> new BusinessException(ResponseCode.NO_DATA));
         commentEntity.delete();
 
         return true;
@@ -48,7 +49,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public boolean modifyComment(CommentDto commentDto) {
-        CommentEntity commentEntity = commentRepository.findById(commentDto.getBoardId()).orElseThrow(() -> new CustomException(""));
+        CommentEntity commentEntity = commentRepository.findById(commentDto.getBoardId()).orElseThrow(() -> new BusinessException(ResponseCode.NO_DATA));
         commentMapper.updateFromDto(commentDto, commentEntity);
 
         return true;

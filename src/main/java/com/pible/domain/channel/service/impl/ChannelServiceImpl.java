@@ -1,7 +1,8 @@
 package com.pible.domain.channel.service.impl;
 
 import com.pible.common.entity.ChannelEntity;
-import com.pible.common.exception.CustomException;
+import com.pible.common.enums.ResponseCode;
+import com.pible.common.exception.BusinessException;
 import com.pible.domain.board.dao.BoardRepository;
 import com.pible.domain.channel.dao.ChannelRepository;
 import com.pible.domain.channel.mapper.ChannelMapper;
@@ -40,7 +41,7 @@ public class ChannelServiceImpl implements ChannelService {
     @Override
     @Transactional
     public boolean deleteChannel(Long channelId) {
-        ChannelEntity channelEntity = channelRepository.findById(channelId).orElseThrow(() -> new CustomException(""));
+        ChannelEntity channelEntity = channelRepository.findById(channelId).orElseThrow(() -> new BusinessException(ResponseCode.NO_DATA));
         channelEntity.delete();
         return true;
     }
@@ -48,7 +49,7 @@ public class ChannelServiceImpl implements ChannelService {
     @Override
     public ChannelRes getChannel(Long channelId) {
         return channelMapper.entityToChannelRes(
-                channelRepository.findById(channelId).orElseThrow(() -> new CustomException(""))
+                channelRepository.findById(channelId).orElseThrow(() -> new BusinessException(ResponseCode.NO_DATA))
         );
     }
 
@@ -59,7 +60,7 @@ public class ChannelServiceImpl implements ChannelService {
 
     @Override
     public List<? extends ContentRes> getChannelContents(Long channelId, ContentDto contentDto) {
-        ChannelEntity channelEntity = channelRepository.findById(channelId).orElseThrow(() -> new CustomException(""));
+        ChannelEntity channelEntity = channelRepository.findById(channelId).orElseThrow(() -> new BusinessException(ResponseCode.NO_DATA));
 
         List<BoardContentRes> boardContentResList = boardRepository.selectBoardContents(
                 channelEntity.getId(),
