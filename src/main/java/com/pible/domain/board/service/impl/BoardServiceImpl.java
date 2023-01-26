@@ -22,6 +22,7 @@ import lombok.RequiredArgsConstructor;
 import org.hibernate.Hibernate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -52,6 +53,10 @@ public class BoardServiceImpl implements BoardService {
 
         boardEntity = boardRepository.save(boardEntity);
 
+        if(CollectionUtils.isEmpty(boardDto.getTagList())) {
+            return boardMapper.entityToBoardRes(boardEntity);
+        }
+
         for(String tag : boardDto.getTagList()) {
             TagEntity tagEntity = tagRepository.findByTag(tag).orElseGet(
                     () -> tagRepository.save(TagEntity.builder().tag(tag).build())
@@ -63,7 +68,7 @@ public class BoardServiceImpl implements BoardService {
                     .build());
         }
 
-        return boardMapper.entityToBoardRes(boardEntity);
+        return boardMapper.entityToBoardRes(boardEntity, boardDto.getTagList());
     }
 
     @Override

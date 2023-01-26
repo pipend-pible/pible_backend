@@ -18,6 +18,7 @@ import com.pible.domain.user.dao.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 
@@ -46,6 +47,10 @@ public class FanartServiceImpl implements FanartService {
 
         fanartEntity = fanartRepository.save(fanartEntity);
 
+        if(CollectionUtils.isEmpty(fanartDto.getTagList())) {
+            return fanartMapper.entityToFanartRes(fanartEntity);
+        }
+
         for(String tag : fanartDto.getTagList()) {
             TagEntity tagEntity = tagRepository.findByTag(tag).orElseGet(
                     () -> tagRepository.save(TagEntity.builder().tag(tag).build())
@@ -57,7 +62,7 @@ public class FanartServiceImpl implements FanartService {
                     .build());
         }
 
-        return fanartMapper.entityToFanartRes(fanartEntity);
+        return fanartMapper.entityToFanartRes(fanartEntity, fanartDto.getTagList());
     }
 
     @Override
@@ -69,6 +74,6 @@ public class FanartServiceImpl implements FanartService {
 
     @Override
     public List<FanartContentRes> getFanartList(ContentDto contentDto) {
-        return fanartRepository.selectFanartContents(null, contentDto);
+        return fanartRepository.selectFanartContents(contentDto.getChannelId(), contentDto);
     }
 }

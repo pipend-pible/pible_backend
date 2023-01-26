@@ -40,7 +40,7 @@ public class FanartRepositoryImpl extends QuerydslRepositorySupport implements C
                         userEntity.nickName,
                         fanartEntity.likeCount,
                         fanartEntity.hitCount,
-                        Expressions.stringTemplate("string_agg({0}, {1})", tagEntity.tag, ",").as("tagList"),
+                        Expressions.stringTemplate("string_agg({0}, {1})", tagEntity.tag.coalesce(""), ",").as("tagList"),
                         fanartEntity.createDate,
                         fanartEntity.id
                     )

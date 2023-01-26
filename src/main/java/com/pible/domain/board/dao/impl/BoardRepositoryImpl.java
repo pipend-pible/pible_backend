@@ -14,6 +14,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
+import java.util.Optional;
 
 import static com.pible.common.entity.QBoardEntity.boardEntity;
 import static com.pible.common.entity.QBoradTagMappingEntity.boradTagMappingEntity;
@@ -41,7 +42,7 @@ public class BoardRepositoryImpl extends QuerydslRepositorySupport implements Cu
                         userEntity.nickName,
                         boardEntity.likeCount,
                         boardEntity.hitCount,
-                        Expressions.stringTemplate("string_agg({0}, {1})", tagEntity.tag, ",").as("tagList"),
+                        Expressions.stringTemplate("string_agg({0}, {1})", tagEntity.tag.coalesce(""), ",").as("tagList"),
                         boardEntity.createDate,
                         boardEntity.id
                     )
