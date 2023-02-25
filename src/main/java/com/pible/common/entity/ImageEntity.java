@@ -34,4 +34,5 @@ public class ImageEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "board_id")
     private BoardEntity boardEntity;
+
 }

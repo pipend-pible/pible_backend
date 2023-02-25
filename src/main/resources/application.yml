@@ -27,4 +27,5 @@ security:
     minutes: 60
   ignore:
     url: /**
-
+image:
+  path: C:\
