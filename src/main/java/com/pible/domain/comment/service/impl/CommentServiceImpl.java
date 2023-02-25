@@ -13,6 +13,7 @@ import com.pible.domain.fanart.dao.FanartRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -23,6 +24,7 @@ public class CommentServiceImpl implements CommentService {
     private final FanartRepository fanartRepository;
     private final CommentMapper commentMapper = CommentMapper.INSTANCE;
     @Override
+    @Transactional
     public CommentRes createComment(CommentDto commentDto) {
         return commentMapper.entityToCommentRes(
                 commentRepository.save(
@@ -32,26 +34,34 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public CommentRes likeComment(Long commentId) {
-        CommentEntity commentEntity = commentRepository.findById(commentId).orElseThrow(() -> new BusinessException(ResponseCode.NO_DATA));
-        commentEntity.like();
-
-        return commentMapper.entityToCommentRes(commentEntity);
-    }
-
-    @Override
-    public boolean deleteComment(Long commentId) {
-        CommentEntity commentEntity = commentRepository.findById(commentId).orElseThrow(() -> new BusinessException(ResponseCode.NO_DATA));
-        commentEntity.delete();
+    @Transactional
+    public boolean likeComment(Long commentId) {
+        commentRepository.findById(commentId).orElseThrow(() -> new BusinessException(ResponseCode.NO_DATA)).like();
 
         return true;
     }
 
     @Override
-    public boolean modifyComment(CommentDto commentDto) {
-        CommentEntity commentEntity = commentRepository.findById(commentDto.getBoardId()).orElseThrow(() -> new BusinessException(ResponseCode.NO_DATA));
+    @Transactional
+    public boolean deleteComment(Long commentId) {
+        commentRepository.findById(commentId).orElseThrow(() -> new BusinessException(ResponseCode.NO_DATA)).delete();
+
+        return true;
+    }
+
+    @Override
+    @Transactional
+    public boolean modifyComment(CommentDto commentDto, Long commentId) {
+        CommentEntity commentEntity = commentRepository.findById(commentId).orElseThrow(() -> new BusinessException(ResponseCode.NO_DATA));
         commentMapper.updateFromDto(commentDto, commentEntity);
 
+        return true;
+    }
+
+    @Override
+    @Transactional
+    public boolean claimComment(Long commentId) {
+        commentRepository.findById(commentId).orElseThrow(() -> new BusinessException(ResponseCode.NO_DATA)).claim();
         return true;
     }
 }

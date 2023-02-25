@@ -22,7 +22,7 @@ public class CommentController {
     }
 
     @PostMapping("/like/{commentId}")
-    public CommentRes likeComment(@PathVariable Long commentId) {
+    public boolean likeComment(@PathVariable Long commentId) {
         return commentService.likeComment(commentId);
     }
 
@@ -32,8 +32,13 @@ public class CommentController {
     }
 
     @PutMapping("/{commentId}")
-    public boolean modifyComment(@RequestBody @Valid CommentDto commentDto) {
-        return commentService.modifyComment(commentDto);
+    public boolean modifyComment(@RequestBody @Valid CommentDto commentDto, @PathVariable Long commentId) {
+        return commentService.modifyComment(commentDto, commentId);
+    }
+
+    @PutMapping("/{commentId}/claim")
+    public boolean claimComment(@PathVariable Long commentId) {
+        return commentService.claimComment(commentId);
     }
 
     // TODO 댓글 신고기능 합의

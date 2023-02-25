@@ -1,9 +1,6 @@
 package com.pible.common.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
@@ -13,6 +10,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "comment", schema = "pible")
 @Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -47,5 +45,8 @@ public class CommentEntity extends BaseEntity{
 
     public void like() {
         this.likeCount += 1;
+    }
+    public void claim() {
+        this.claimCount += 1;
     }
 }
