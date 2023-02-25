@@ -36,7 +36,7 @@ public class CommentController {
         return commentService.modifyComment(commentDto, commentId);
     }
 
-    @PutMapping("/{commentId}/claim")
+    @PutMapping("/claim/{commentId}")
     public boolean claimComment(@PathVariable Long commentId) {
         return commentService.claimComment(commentId);
     }

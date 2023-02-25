@@ -1,9 +1,6 @@
 package com.pible.common.mapper;
 
-import com.pible.common.entity.BoardCategoryEntity;
-import com.pible.common.entity.ChannelEntity;
-import com.pible.common.entity.FanartCategoryEntity;
-import com.pible.common.entity.UserEntity;
+import com.pible.common.entity.*;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.Named;
@@ -25,6 +22,24 @@ public interface GenericMapper<E, D> {
     @Named("channelEntityToId")
     default Long channelEntityToId(ChannelEntity channelEntity) {
         return channelEntity.getId();
+    }
+
+    @Named("fanartEntityToId")
+    default Long fanartEntityToId(FanartEntity fanartEntity) {
+        if(fanartEntity == null) {
+            return null;
+        }
+
+        return fanartEntity.getId();
+    }
+
+    @Named("boardEntityToId")
+    default Long boardEntityToId(BoardEntity boardEntity) {
+        if(boardEntity == null) {
+            return null;
+        }
+
+        return boardEntity.getId();
     }
 
     @Named("boardCategoryEntityToId")

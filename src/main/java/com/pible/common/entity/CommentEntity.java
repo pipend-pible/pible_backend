@@ -43,6 +43,11 @@ public class CommentEntity extends BaseEntity{
     @JoinColumn(name = "user_id")
     private UserEntity userEntity;
 
+    public void setEntityRelation(BoardEntity boardEntity, FanartEntity fanartEntity, UserEntity userEntity) {
+        this.boardEntity = boardEntity;
+        this.fanartEntity = fanartEntity;
+        this.userEntity = userEntity;
+    }
     public void like() {
         this.likeCount += 1;
     }
