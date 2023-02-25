@@ -7,6 +7,7 @@ import com.pible.domain.claim.board.model.BoardClaimDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -19,8 +20,8 @@ public class BoardController {
     private final BoardService boardService;
 
     @PostMapping("/create")
-    public BoardRes saveBoard(@RequestBody @Valid BoardDto boardDto){
-        return boardService.saveBoard(boardDto);
+    public BoardRes saveBoard(MultipartHttpServletRequest request, @RequestBody @Valid BoardDto boardDto){
+        return boardService.saveBoard(request, boardDto);
     }
 
     @GetMapping("/{boardId}")

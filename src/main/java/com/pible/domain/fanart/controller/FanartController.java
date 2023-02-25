@@ -8,6 +8,7 @@ import com.pible.domain.fanart.service.FanartService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -20,8 +21,8 @@ public class FanartController {
     private final FanartService fanartService;
 
     @PostMapping("/create")
-    public FanartRes saveFanart(@RequestBody @Valid FanartDto fanartDto) {
-        return fanartService.saveFanart(fanartDto);
+    public FanartRes saveFanart(MultipartHttpServletRequest request, @RequestBody @Valid FanartDto fanartDto) {
+        return fanartService.saveFanart(request, fanartDto);
     }
 
     @GetMapping("/{fanartId}")

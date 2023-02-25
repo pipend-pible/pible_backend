@@ -19,6 +19,6 @@ public class ImageController {
 
     @PostMapping("")
     public void uploadImageFile(MultipartHttpServletRequest request, @RequestBody ImageDto imageDto) {
-        imageService.uploadImageFile(request, imageDto);
+
     }
 }

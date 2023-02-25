@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
@@ -25,6 +26,7 @@ public class ImageEntity {
     private String imageName;
     private String oriImageName;
     private String imagePath;
+    @ColumnDefault("'N'")
     private String repImageYn;
 
     @ManyToOne(fetch = FetchType.LAZY)

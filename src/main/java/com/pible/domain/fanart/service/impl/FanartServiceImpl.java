@@ -12,6 +12,7 @@ import com.pible.domain.fanart.mapper.FanartMapper;
 import com.pible.domain.fanart.model.FanartDto;
 import com.pible.domain.fanart.model.FanartRes;
 import com.pible.domain.fanart.service.FanartService;
+import com.pible.domain.image.service.ImageService;
 import com.pible.domain.mapping.dao.FanartTagMappingRepository;
 import com.pible.domain.tag.dao.TagRepository;
 import com.pible.domain.user.dao.UserRepository;
@@ -19,6 +20,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.util.List;
 
@@ -31,11 +33,12 @@ public class FanartServiceImpl implements FanartService {
     private final TagRepository tagRepository;
     private final FanartCategoryRepository fanartCategoryRepository;
     private final FanartTagMappingRepository fanartTagMappingRepository;
+    private final ImageService imageService;
     private final FanartMapper fanartMapper = FanartMapper.INSTANCE;
 
     @Override
     @Transactional
-    public FanartRes saveFanart(FanartDto fanartDto) {
+    public FanartRes saveFanart(MultipartHttpServletRequest request, FanartDto fanartDto) {
         FanartEntity fanartEntity = fanartMapper.dtoToEntity(fanartDto);
 
         fanartEntity.setRelation(
@@ -61,6 +64,9 @@ public class FanartServiceImpl implements FanartService {
                     .tagEntity(tagEntity)
                     .build());
         }
+
+        imageService.uploadImageFiles(request, null, fanartEntity);
+        imageService.uploadThumbnail(request, fanartEntity);
 
         return fanartMapper.entityToFanartRes(fanartEntity, fanartDto.getTagList());
     }

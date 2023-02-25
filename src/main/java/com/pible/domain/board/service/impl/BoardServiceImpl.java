@@ -15,6 +15,7 @@ import com.pible.domain.category.board.dao.BoardCategoryRepository;
 import com.pible.domain.channel.dao.ChannelRepository;
 import com.pible.domain.claim.board.dao.BoardClaimRepository;
 import com.pible.domain.claim.board.model.BoardClaimDto;
+import com.pible.domain.image.service.ImageService;
 import com.pible.domain.mapping.dao.BoardTagMappingRepository;
 import com.pible.domain.tag.dao.TagRepository;
 import com.pible.domain.user.dao.UserRepository;
@@ -23,6 +24,7 @@ import org.hibernate.Hibernate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -37,11 +39,12 @@ public class BoardServiceImpl implements BoardService {
     private final BoardCategoryRepository boardCategoryRepository;
     private final BoardTagMappingRepository boardTagMappingRepository;
     private final BoardClaimRepository boardClaimRepository;
+    private final ImageService imageService;
     private final BoardMapper boardMapper = BoardMapper.INSTANCE;
 
     @Override
     @Transactional
-    public BoardRes saveBoard(BoardDto boardDto) {
+    public BoardRes saveBoard(MultipartHttpServletRequest request, BoardDto boardDto) {
         BoardEntity boardEntity = boardMapper.dtoToEntity(boardDto);
 
         boardEntity.setRelation(
@@ -67,6 +70,8 @@ public class BoardServiceImpl implements BoardService {
                     .tagEntity(tagEntity)
                     .build());
         }
+
+        imageService.uploadImageFiles(request, boardEntity, null);
 
         return boardMapper.entityToBoardRes(boardEntity, boardDto.getTagList());
     }

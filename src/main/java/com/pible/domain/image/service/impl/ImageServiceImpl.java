@@ -8,7 +8,6 @@ import com.pible.common.exception.BusinessException;
 import com.pible.domain.board.dao.BoardRepository;
 import com.pible.domain.fanart.dao.FanartRepository;
 import com.pible.domain.image.dao.ImageRepository;
-import com.pible.domain.image.model.ImageDto;
 import com.pible.domain.image.service.ImageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,38 +33,20 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class ImageServiceImpl implements ImageService {
     private final ImageRepository imageRepository;
-    private final BoardRepository boardRepository;
-    private final FanartRepository fanartRepository;
     @Value("${image.path}")
     private String imagePath;
 
     @Override
     @Transactional
-    public void uploadImageFile(MultipartHttpServletRequest request, ImageDto imageDto) {
-        List<MultipartFile> fileList = request.getFiles("fileName");
+    public void uploadImageFiles(MultipartHttpServletRequest request, BoardEntity boardEntity, FanartEntity fanartEntity) {
+        List<MultipartFile> fileList = request.getFiles("images");
         List<ImageEntity> imageEntityList = new ArrayList<>();
-
-        BoardEntity boardEntity = null;
-        FanartEntity fanartEntity = null;
-
-        if(imageDto.getFanartId() != null && imageDto.getBoardId() != null) {
-            throw new BusinessException(ResponseCode.FAIL);
-        } else if (imageDto.getBoardId() != null) {
-            boardEntity = boardRepository.findById(imageDto.getBoardId())
-                    .orElseThrow(() -> new BusinessException(ResponseCode.NO_DATA));
-        } else if (imageDto.getFanartId() != null) {
-            fanartEntity = fanartRepository.findById(imageDto.getFanartId())
-                    .orElseThrow(() -> new BusinessException(ResponseCode.NO_DATA));
-        } else {
-            throw new BusinessException(ResponseCode.FAIL);
-        }
 
         for(MultipartFile file : fileList) {
             String fileName = UUID.randomUUID().toString();
 
             imageEntityList.add(
                     ImageEntity.builder()
-                            .repImageYn(imageDto.getRepImageYn())
                             .imageName(fileName)
                             .imagePath(this.imagePath)
                             .oriImageName(file.getOriginalFilename())
@@ -83,6 +64,34 @@ public class ImageServiceImpl implements ImageService {
         }
 
         imageRepository.saveAll(imageEntityList);
+    }
+
+    @Override
+    @Transactional
+    public void uploadThumbnail(MultipartHttpServletRequest request, FanartEntity fanartEntity) {
+        MultipartFile file = request.getFile("thumbnail");
+
+        if(file == null) {
+            return;
+        }
+
+        String fileName = UUID.randomUUID().toString();
+
+        Path copyOfLocation = Paths.get(this.imagePath + File.separator + StringUtils.cleanPath(fileName));
+        try {
+            Files.copy(file.getInputStream(), copyOfLocation, StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException e) {
+            throw new BusinessException(ResponseCode.FAIL);
+        }
+
+        imageRepository.save(
+                ImageEntity.builder()
+                .imageName(fileName)
+                .imagePath(this.imagePath)
+                .oriImageName(file.getOriginalFilename())
+                .fanartEntity(fanartEntity)
+                .build()
+        );
     }
 
 }
