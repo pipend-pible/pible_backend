@@ -19,7 +19,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -30,6 +31,29 @@ public class CommentServiceImpl implements CommentService {
     private final FanartRepository fanartRepository;
     private final UserRepository userRepository;
     private final CommentMapper commentMapper = CommentMapper.INSTANCE;
+
+    @Override
+    public List<CommentRes> getBoardCommentList(Long boardId) {
+        return commentRepository.findAllByBoardEntity(
+                boardRepository.findById(boardId)
+                        .orElseThrow(() -> new BusinessException(ResponseCode.FAIL))
+                )
+                .stream()
+                .map(commentMapper::entityToCommentRes)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<CommentRes> getFanartCommentList(Long fanartId) {
+        return commentRepository.findAllByFanartEntity(
+                        fanartRepository.findById(fanartId)
+                                .orElseThrow(() -> new BusinessException(ResponseCode.FAIL))
+                )
+                .stream()
+                .map(commentMapper::entityToCommentRes)
+                .collect(Collectors.toList());
+    }
+
     @Override
     @Transactional
     public CommentRes createComment(CommentDto commentDto) {

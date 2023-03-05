@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -15,6 +16,16 @@ import javax.validation.Valid;
 @RequestMapping("/comment")
 public class CommentController {
     private final CommentService commentService;
+
+    @GetMapping("/board/{boardId}")
+    public List<CommentRes> getBoardCommentList(@PathVariable Long boardId) {
+        return commentService.getBoardCommentList(boardId);
+    }
+
+    @GetMapping("/fanart/{fanartId}")
+    public List<CommentRes> getFanartCommentList(@PathVariable Long fanartId) {
+        return commentService.getFanartCommentList(fanartId);
+    }
 
     @PostMapping("")
     public CommentRes createComment(@RequestBody @Valid CommentDto commentDto) {
