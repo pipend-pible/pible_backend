@@ -7,6 +7,7 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Getter
 @Setter
@@ -16,4 +17,5 @@ import javax.validation.constraints.NotNull;
 public class FanartRes extends FanartDto{
     @NotNull
     private Long fanartId;
+    private List<String> imageUrlList;
 }

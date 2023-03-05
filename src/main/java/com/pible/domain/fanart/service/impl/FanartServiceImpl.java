@@ -14,6 +14,7 @@ import com.pible.domain.fanart.mapper.FanartMapper;
 import com.pible.domain.fanart.model.FanartDto;
 import com.pible.domain.fanart.model.FanartRes;
 import com.pible.domain.fanart.service.FanartService;
+import com.pible.domain.image.dao.ImageRepository;
 import com.pible.domain.image.service.ImageService;
 import com.pible.domain.mapping.dao.FanartTagMappingRepository;
 import com.pible.domain.tag.dao.TagRepository;
@@ -25,6 +26,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -35,6 +37,7 @@ public class FanartServiceImpl implements FanartService {
     private final TagRepository tagRepository;
     private final FanartCategoryRepository fanartCategoryRepository;
     private final FanartTagMappingRepository fanartTagMappingRepository;
+    private final ImageRepository imageRepository;
     private final ImageService imageService;
     private final FanartMapper fanartMapper = FanartMapper.INSTANCE;
 
@@ -75,9 +78,18 @@ public class FanartServiceImpl implements FanartService {
 
     @Override
     public FanartRes getFanart(Long fanartId) {
-        return fanartMapper.entityToFanartRes(
-                fanartRepository.findById(fanartId).orElseThrow(() -> new BusinessException(ResponseCode.NO_DATA))
+        FanartEntity fanartEntity = fanartRepository.findById(fanartId)
+                .orElseThrow(() -> new BusinessException(ResponseCode.NO_DATA));
+        FanartRes fanartRes = fanartMapper.entityToFanartRes(fanartEntity);
+
+        fanartRes.setImageUrlList(
+                imageRepository.findAllByFanartEntity(fanartEntity)
+                        .stream()
+                        .map(imageEntity -> imageEntity.getImagePath() + imageEntity.getImageName())
+                        .collect(Collectors.toList())
         );
+
+        return fanartRes;
     }
 
     @Override
