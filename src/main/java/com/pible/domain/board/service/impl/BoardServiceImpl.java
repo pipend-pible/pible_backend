@@ -15,6 +15,7 @@ import com.pible.domain.category.board.dao.BoardCategoryRepository;
 import com.pible.domain.channel.dao.ChannelRepository;
 import com.pible.domain.claim.board.dao.BoardClaimRepository;
 import com.pible.domain.claim.board.model.BoardClaimDto;
+import com.pible.domain.image.dao.ImageRepository;
 import com.pible.domain.image.service.ImageService;
 import com.pible.domain.mapping.dao.BoardTagMappingRepository;
 import com.pible.domain.tag.dao.TagRepository;
@@ -24,7 +25,7 @@ import org.hibernate.Hibernate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -39,12 +40,13 @@ public class BoardServiceImpl implements BoardService {
     private final BoardCategoryRepository boardCategoryRepository;
     private final BoardTagMappingRepository boardTagMappingRepository;
     private final BoardClaimRepository boardClaimRepository;
+    private final ImageRepository imageRepository;
     private final ImageService imageService;
     private final BoardMapper boardMapper = BoardMapper.INSTANCE;
 
     @Override
     @Transactional
-    public BoardRes saveBoard(MultipartHttpServletRequest request, BoardDto boardDto) {
+    public BoardRes saveBoard(List<MultipartFile> multipartFileList, BoardDto boardDto) {
         BoardEntity boardEntity = boardMapper.dtoToEntity(boardDto);
 
         boardEntity.setRelation(
@@ -55,6 +57,8 @@ public class BoardServiceImpl implements BoardService {
         );
 
         boardEntity = boardRepository.save(boardEntity);
+
+        imageService.uploadImageFiles(multipartFileList, boardEntity, null);
 
         if(CollectionUtils.isEmpty(boardDto.getTagList())) {
             return boardMapper.entityToBoardRes(boardEntity);
@@ -71,16 +75,22 @@ public class BoardServiceImpl implements BoardService {
                     .build());
         }
 
-        imageService.uploadImageFiles(request, boardEntity, null);
-
         return boardMapper.entityToBoardRes(boardEntity, boardDto.getTagList());
     }
 
     @Override
     public BoardRes getBoard(Long boardId) {
-        return boardMapper.entityToBoardRes(
-                boardRepository.findById(boardId).orElseThrow(() -> new BusinessException(ResponseCode.NO_DATA))
+        BoardEntity boardEntity = boardRepository.findById(boardId).orElseThrow(() -> new BusinessException(ResponseCode.NO_DATA));
+        BoardRes boardRes = boardMapper.entityToBoardRes(boardEntity);
+
+        boardRes.setImageUrlList(
+                imageRepository.findAllByBoardEntity(boardEntity)
+                        .stream()
+                        .map(imageEntity -> imageEntity.getImagePath() + imageEntity.getImageName())
+                        .collect(Collectors.toList())
         );
+
+        return boardRes;
     }
 
     @Override

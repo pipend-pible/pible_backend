@@ -28,4 +28,4 @@ security:
   ignore:
     url: /**
 image:
-  path: C:\
+  path: C:\image_test\

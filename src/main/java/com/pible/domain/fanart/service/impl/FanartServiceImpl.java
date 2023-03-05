@@ -1,6 +1,8 @@
 package com.pible.domain.fanart.service.impl;
 
-import com.pible.common.entity.*;
+import com.pible.common.entity.FanartEntity;
+import com.pible.common.entity.FanartTagMappingEntity;
+import com.pible.common.entity.TagEntity;
 import com.pible.common.enums.ResponseCode;
 import com.pible.common.exception.BusinessException;
 import com.pible.domain.category.fanart.dao.FanartCategoryRepository;
@@ -20,7 +22,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -38,7 +40,7 @@ public class FanartServiceImpl implements FanartService {
 
     @Override
     @Transactional
-    public FanartRes saveFanart(MultipartHttpServletRequest request, FanartDto fanartDto) {
+    public FanartRes saveFanart(List<MultipartFile> multipartFileList, MultipartFile multipartFile, FanartDto fanartDto) {
         FanartEntity fanartEntity = fanartMapper.dtoToEntity(fanartDto);
 
         fanartEntity.setRelation(
@@ -49,6 +51,9 @@ public class FanartServiceImpl implements FanartService {
         );
 
         fanartEntity = fanartRepository.save(fanartEntity);
+
+        imageService.uploadImageFiles(multipartFileList, null, fanartEntity);
+        imageService.uploadThumbnail(multipartFile, fanartEntity);
 
         if(CollectionUtils.isEmpty(fanartDto.getTagList())) {
             return fanartMapper.entityToFanartRes(fanartEntity);
@@ -64,9 +69,6 @@ public class FanartServiceImpl implements FanartService {
                     .tagEntity(tagEntity)
                     .build());
         }
-
-        imageService.uploadImageFiles(request, null, fanartEntity);
-        imageService.uploadThumbnail(request, fanartEntity);
 
         return fanartMapper.entityToFanartRes(fanartEntity, fanartDto.getTagList());
     }
