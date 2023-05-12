@@ -14,7 +14,7 @@ spring:
   datasource:
     driver-class-name: org.postgresql.Driver
     username: postgres
-    password: 1234
+    password: ENC(K2kw1O8ByRStli2Fp6bjXQ==)
     url: jdbc:postgresql://localhost:5432/postgres
   config:
     activate:
@@ -27,5 +27,12 @@ security:
     minutes: 60
   ignore:
     url: /**
-image:
-  path: C:\image_test\
+
+jasypt:
+  encryptor:
+    bean: jasyptStringEncryptor
+
+cloudinary:
+  name: ENC(2A4qr0WEccNANg/9oFGvYMeeg2Z637iJ)
+  key: ENC(k5MEfPT2KeyLomd6HuhkAmNV8Uou0uOk)
+  secret-key: ENC(+nXGMWz01QapQ56IrVsfzNFv3FhnGRmJU/CTiMH84yoaKQg/Akv50Q==)

@@ -1,11 +1,9 @@
 package com.pible.domain.fanart.dao.impl;
 
-import com.pible.common.entity.BoardEntity;
 import com.pible.common.entity.FanartEntity;
 import com.pible.domain.channel.model.ContentDto;
 import com.pible.domain.channel.model.FanartContentRes;
 import com.pible.domain.fanart.dao.custom.CustomFanartRepository;
-import com.pible.domain.fanart.model.FanartDto;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -13,9 +11,9 @@ import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport
 
 import java.util.List;
 
+import static com.pible.common.entity.QChannelEntity.channelEntity;
 import static com.pible.common.entity.QFanartEntity.fanartEntity;
 import static com.pible.common.entity.QFanartTagMappingEntity.fanartTagMappingEntity;
-import static com.pible.common.entity.QChannelEntity.channelEntity;
 import static com.pible.common.entity.QTagEntity.tagEntity;
 import static com.pible.common.entity.QUserEntity.userEntity;
 import static com.pible.common.querydsl.BooleanExpressionUtil.*;

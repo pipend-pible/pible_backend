@@ -2,6 +2,7 @@ package com.pible.domain.fanart.service.impl;
 
 import com.pible.common.entity.FanartEntity;
 import com.pible.common.entity.FanartTagMappingEntity;
+import com.pible.common.entity.ImageEntity;
 import com.pible.common.entity.TagEntity;
 import com.pible.common.enums.ResponseCode;
 import com.pible.common.exception.BusinessException;
@@ -85,7 +86,7 @@ public class FanartServiceImpl implements FanartService {
         fanartRes.setImageUrlList(
                 imageRepository.findAllByFanartEntity(fanartEntity)
                         .stream()
-                        .map(imageEntity -> imageEntity.getImagePath() + imageEntity.getImageName())
+                        .map(ImageEntity::getImageUrl)
                         .collect(Collectors.toList())
         );
 

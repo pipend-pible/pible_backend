@@ -1,9 +1,6 @@
 package com.pible.domain.board.service.impl;
 
-import com.pible.common.entity.BoardClaimEntity;
-import com.pible.common.entity.BoardEntity;
-import com.pible.common.entity.TagEntity;
-import com.pible.common.entity.BoradTagMappingEntity;
+import com.pible.common.entity.*;
 import com.pible.common.enums.ResponseCode;
 import com.pible.common.exception.BusinessException;
 import com.pible.domain.board.dao.BoardRepository;
@@ -86,7 +83,7 @@ public class BoardServiceImpl implements BoardService {
         boardRes.setImageUrlList(
                 imageRepository.findAllByBoardEntity(boardEntity)
                         .stream()
-                        .map(imageEntity -> imageEntity.getImagePath() + imageEntity.getImageName())
+                        .map(ImageEntity::getImageUrl)
                         .collect(Collectors.toList())
         );
 

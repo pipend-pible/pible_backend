@@ -23,9 +23,9 @@ public class ImageEntity {
     @GeneratedValue(generator = "imageSequence")
     @Column(name = "image_id")
     private Long id;
-    private String imageName;
+    @Column(name = "image_name")
+    private String imageUrl;
     private String oriImageName;
-    private String imagePath;
     @ColumnDefault("'N'")
     private String repImageYn;
 

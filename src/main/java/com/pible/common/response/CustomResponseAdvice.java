@@ -1,7 +1,6 @@
-package com.pible.common;
+package com.pible.common.response;
 
 import com.pible.common.enums.ResponseCode;
-import com.pible.common.response.PibleResponse;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;

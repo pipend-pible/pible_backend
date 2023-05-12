@@ -1,5 +1,6 @@
 package com.pible.domain.image.service.impl;
 
+import com.cloudinary.utils.ObjectUtils;
 import com.pible.common.entity.BoardEntity;
 import com.pible.common.entity.FanartEntity;
 import com.pible.common.entity.ImageEntity;
@@ -9,30 +10,22 @@ import com.pible.domain.image.dao.ImageRepository;
 import com.pible.domain.image.service.ImageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
-import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
+
+import static com.pible.common.utils.CloudinaryUtils.getCloudinary;
 
 @Service
 @Slf4j
 @RequiredArgsConstructor
 public class ImageServiceImpl implements ImageService {
     private final ImageRepository imageRepository;
-    @Value("${image.path}")
-    private String imagePath;
 
     @Override
     @Transactional
@@ -44,12 +37,11 @@ public class ImageServiceImpl implements ImageService {
         List<ImageEntity> imageEntityList = new ArrayList<>();
 
         for(MultipartFile file : multipartFileList) {
-            String fileName = generateFile(file);
+            String fileUrl = generateFile(file);
 
             imageEntityList.add(
                     ImageEntity.builder()
-                            .imageName(fileName)
-                            .imagePath(this.imagePath)
+                            .imageUrl(fileUrl)
                             .oriImageName(file.getOriginalFilename())
                             .boardEntity(boardEntity)
                             .fanartEntity(fanartEntity)
@@ -67,12 +59,11 @@ public class ImageServiceImpl implements ImageService {
             return;
         }
 
-        String fileName = generateFile(multipartFile);
+        String fileUrl = generateFile(multipartFile);
 
         imageRepository.save(
                 ImageEntity.builder()
-                .imageName(fileName)
-                .imagePath(this.imagePath)
+                .imageUrl(fileUrl)
                 .oriImageName(multipartFile.getOriginalFilename())
                 .fanartEntity(fanartEntity)
                 .build()
@@ -80,16 +71,20 @@ public class ImageServiceImpl implements ImageService {
     }
 
     private String generateFile(MultipartFile file) {
-        String fileName = UUID.randomUUID().toString();
+        String fileUrl;
 
-        Path copyOfLocation = Paths.get(this.imagePath + File.separator + StringUtils.cleanPath(fileName));
         try {
-            Files.copy(file.getInputStream(), copyOfLocation, StandardCopyOption.REPLACE_EXISTING);
-        } catch (IOException e) {
+            fileUrl = String.valueOf(
+                    getCloudinary().uploader().upload(
+                            file.getBytes(),
+                            ObjectUtils.emptyMap()
+                    ).get("url")
+            );
+        } catch (IOException exception) {
             throw new BusinessException(ResponseCode.FAIL);
         }
 
-        return fileName;
+        return fileUrl;
     }
 
 }
