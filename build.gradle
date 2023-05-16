@@ -28,6 +28,9 @@ dependencies {
     implementation 'javax.validation:validation-api:2.0.1.Final'
     implementation 'org.hibernate.validator:hibernate-validator:8.0.0.Final'
     implementation 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
+    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
 
     implementation 'com.cloudinary:cloudinary-http44:1.33.0'
 

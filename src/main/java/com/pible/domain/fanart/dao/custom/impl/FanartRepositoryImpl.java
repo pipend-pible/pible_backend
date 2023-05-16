@@ -1,4 +1,4 @@
-package com.pible.domain.fanart.dao.impl;
+package com.pible.domain.fanart.dao.custom.impl;
 
 import com.pible.common.entity.FanartEntity;
 import com.pible.domain.channel.model.ContentDto;

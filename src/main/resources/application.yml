@@ -22,11 +22,10 @@ spring:
   jackson:
     property-naming-strategy: SNAKE_CASE
 security:
-  jwt:
-    key: custom_sharing_planner_jwt_secret_key
-    minutes: 60
   ignore:
-    url: /**
+    url: /login, /sign-up/
+  cors:
+    origin: http://localhost:8081
 
 jasypt:
   encryptor:

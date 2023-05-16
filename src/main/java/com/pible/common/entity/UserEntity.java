@@ -1,5 +1,6 @@
 package com.pible.common.entity;
 
+import com.pible.common.converter.PasswordConverter;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -24,6 +25,8 @@ public class UserEntity extends BaseEntity{
     @Column(name = "user_id")
     private Long id;
     private String email;
+
+    @Convert(converter = PasswordConverter.class)
     private String password;
     private String nickName;
     private String verifyAgeYn;
@@ -34,4 +37,8 @@ public class UserEntity extends BaseEntity{
     private String bankAccountYn;
     private LocalDateTime deleteDate;
     private String profileMsg;
+
+    public void setUserEmail(String email) {
+        this.email = email;
+    }
 }

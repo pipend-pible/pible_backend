@@ -1,9 +1,7 @@
 package com.pible.domain.fanart.mapper;
 
-import com.pible.common.entity.BoardEntity;
 import com.pible.common.entity.FanartEntity;
 import com.pible.common.mapper.GenericMapper;
-import com.pible.domain.board.model.BoardRes;
 import com.pible.domain.fanart.model.FanartDto;
 import com.pible.domain.fanart.model.FanartRes;
 import org.mapstruct.Mapper;
