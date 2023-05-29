@@ -14,6 +14,7 @@ import java.util.List;
 import static com.pible.common.entity.QChannelEntity.channelEntity;
 import static com.pible.common.entity.QFanartEntity.fanartEntity;
 import static com.pible.common.entity.QFanartTagMappingEntity.fanartTagMappingEntity;
+import static com.pible.common.entity.QImageEntity.imageEntity;
 import static com.pible.common.entity.QTagEntity.tagEntity;
 import static com.pible.common.entity.QUserEntity.userEntity;
 import static com.pible.common.querydsl.BooleanExpressionUtil.*;
@@ -40,7 +41,8 @@ public class FanartRepositoryImpl extends QuerydslRepositorySupport implements C
                         fanartEntity.hitCount,
                         Expressions.stringTemplate("string_agg({0}, {1})", tagEntity.tag.coalesce(""), ",").as("tagList"),
                         fanartEntity.createDate,
-                        fanartEntity.id
+                        fanartEntity.id,
+                        imageEntity.imageUrl.as("fanartThumbnailImageUrl")
                     )
                 )
                 .from(fanartEntity)
@@ -50,11 +52,13 @@ public class FanartRepositoryImpl extends QuerydslRepositorySupport implements C
                     .on(fanartTagMappingEntity.fanartEntity.eq(fanartEntity))
                 .leftJoin(tagEntity)
                     .on(fanartTagMappingEntity.tagEntity.eq(tagEntity))
+                .join(fanartEntity, imageEntity.fanartEntity)
                 .where(
                         contains(fanartEntity.title, contentDto.getTitle()),
                         eq(userEntity.id, contentDto.getUserId()),
                         containsList(tagEntity.tag, contentDto.getTagList()),
-                        eq(channelEntity.id, channelId)
+                        eq(channelEntity.id, channelId),
+                        eq(imageEntity.thumbnailYn, "Y")
                 )
                 .groupBy(channelEntity.id, fanartEntity.id, channelEntity.category, fanartEntity.title, userEntity.id,
                         userEntity.email, userEntity.nickName, fanartEntity.likeCount, fanartEntity.hitCount)

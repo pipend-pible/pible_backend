@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class FanartContentRes extends ContentRes {
     private Long fanartId;
+    private String fanartThumbnailImageUrl;
 
     public FanartContentRes(Long channelId, String category, String title, Long userId,
                             String userEmail, String userNickName, Integer likeCount,

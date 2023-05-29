@@ -28,6 +28,7 @@ public class ImageEntity {
     private String oriImageName;
     @ColumnDefault("'N'")
     private String repImageYn;
+    private String thumbnailYn;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fanart_id")

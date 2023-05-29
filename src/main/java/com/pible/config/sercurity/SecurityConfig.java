@@ -3,7 +3,6 @@ package com.pible.config.sercurity;
 import com.pible.config.sercurity.enums.Authority;
 import com.pible.config.sercurity.handler.JwtAccessDeniedHandler;
 import com.pible.config.sercurity.handler.JwtAuthenticationEntryPoint;
-import com.pible.config.sercurity.utils.JwtUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
@@ -79,8 +78,5 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
-    public JwtUtils JwtUtils(@Value("${security.jwt.key}") String textKey) {
-        return new JwtUtils(textKey);
-    }
+
 }
