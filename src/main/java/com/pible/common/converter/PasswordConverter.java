@@ -2,11 +2,13 @@ package com.pible.common.converter;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 
 @Converter
+@Component
 @RequiredArgsConstructor
 public class PasswordConverter implements AttributeConverter<String, String> {
     private final PasswordEncoder passwordEncoder;

@@ -18,9 +18,11 @@ import java.time.LocalDateTime;
 @Where(clause = "del_yn = 'N'")
 @EntityListeners(AuditingEntityListener.class)
 public class BaseEntity {
+
     @CreatedDate
     @Convert(converter = DateTimeConverter.class)
     private LocalDateTime createDate;
+
     @LastModifiedDate
     @Convert(converter = DateTimeConverter.class)
     private LocalDateTime updateDate;
