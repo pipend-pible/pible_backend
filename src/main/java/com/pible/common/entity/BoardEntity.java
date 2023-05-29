@@ -58,4 +58,7 @@ public class BoardEntity extends BaseEntity{
     public void like() {
         this.likeCount += 1;
     }
+    public void plusHitCount() {
+        this.hitCount += 1;
+    }
 }

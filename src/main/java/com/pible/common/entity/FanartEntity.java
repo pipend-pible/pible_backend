@@ -48,4 +48,8 @@ public class FanartEntity extends BaseEntity{
         this.userEntity = userEntity;
         this.fanartCategoryEntity = fanartCategoryEntity;
     }
+
+    public void plusHitCount() {
+        this.hitCount += 1;
+    }
 }

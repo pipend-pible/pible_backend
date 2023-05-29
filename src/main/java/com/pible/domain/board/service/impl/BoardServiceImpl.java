@@ -87,6 +87,8 @@ public class BoardServiceImpl implements BoardService {
                         .collect(Collectors.toList())
         );
 
+        boardEntity.plusHitCount();
+
         return boardRes;
     }
 

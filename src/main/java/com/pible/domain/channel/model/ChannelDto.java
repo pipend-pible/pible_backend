@@ -25,4 +25,6 @@ public class ChannelDto {
     @NotEmpty
     private String ageLimit;
     private String apply;
+    private Integer fanartTotalHitCount;
+    private Integer boardTotalHitCount;
 }

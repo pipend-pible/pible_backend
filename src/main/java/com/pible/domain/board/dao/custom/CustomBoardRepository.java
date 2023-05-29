@@ -1,6 +1,5 @@
 package com.pible.domain.board.dao.custom;
 
-import com.pible.domain.board.model.BoardDto;
 import com.pible.domain.channel.model.BoardContentRes;
 import com.pible.domain.channel.model.ContentDto;
 

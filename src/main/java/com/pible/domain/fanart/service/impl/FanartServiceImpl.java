@@ -78,6 +78,7 @@ public class FanartServiceImpl implements FanartService {
     }
 
     @Override
+    @Transactional
     public FanartRes getFanart(Long fanartId) {
         FanartEntity fanartEntity = fanartRepository.findById(fanartId)
                 .orElseThrow(() -> new BusinessException(ResponseCode.NO_DATA));
@@ -89,6 +90,8 @@ public class FanartServiceImpl implements FanartService {
                         .map(ImageEntity::getImageUrl)
                         .collect(Collectors.toList())
         );
+
+        fanartEntity.plusHitCount();
 
         return fanartRes;
     }
