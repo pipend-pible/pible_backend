@@ -23,7 +23,6 @@ public class ImageEntity {
     @GeneratedValue(generator = "imageSequence")
     @Column(name = "image_id")
     private Long id;
-    @Column(name = "image_name")
     private String imageUrl;
     private String oriImageName;
     @ColumnDefault("'N'")
