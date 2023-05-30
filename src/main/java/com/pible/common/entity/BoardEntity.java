@@ -25,11 +25,11 @@ public class BoardEntity extends BaseEntity{
     private String title;
     private String content;
     @ColumnDefault("0")
-    private Integer likeCount;
+    private int likeCount;
     @ColumnDefault("0")
-    private Integer disLikeCount;
+    private int disLikeCount;
     @ColumnDefault("0")
-    private Integer hitCount;
+    private int hitCount;
     @ColumnDefault("'N'")
     private String anonymousYn;
     @ColumnDefault("'N'")

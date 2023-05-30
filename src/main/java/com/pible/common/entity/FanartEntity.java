@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
@@ -16,7 +17,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @DynamicUpdate
 @SequenceGenerator(allocationSize = 1, name = "fanartSequence", sequenceName = "fanart_sequence", schema = "pible")
-public class FanartEntity extends BaseEntity{
+public class FanartEntity extends BaseEntity {
 
     @Id
     @GeneratedValue(generator = "fanartSequence")
@@ -24,9 +25,12 @@ public class FanartEntity extends BaseEntity{
     private Long id;
     private String title;
     private String content;
-    private Integer hitCount;
-    private Integer likeCount;
-    private Integer disLikeCount;
+    @ColumnDefault("0")
+    private int hitCount;
+    @ColumnDefault("0")
+    private int likeCount;
+    @ColumnDefault("0")
+    private int disLikeCount;
     private String myArtYn;
     private String displayYn;
     private String adultYn;

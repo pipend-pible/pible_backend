@@ -27,7 +27,7 @@ public class BaseEntity {
     @Convert(converter = DateTimeConverter.class)
     private LocalDateTime updateDate;
     @ColumnDefault("'N'")
-    private String deleteYn;
+    private String deleteYn = "N";
 
     public void delete() {
         this.deleteYn = "Y";
