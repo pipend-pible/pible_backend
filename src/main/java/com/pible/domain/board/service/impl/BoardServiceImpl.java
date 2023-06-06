@@ -75,6 +75,7 @@ public class BoardServiceImpl implements BoardService {
         return boardMapper.entityToBoardRes(boardEntity, boardDto.getTagList());
     }
 
+    @Transactional
     @Override
     public BoardRes getBoard(Long boardId) {
         BoardEntity boardEntity = boardRepository.findById(boardId).orElseThrow(() -> new BusinessException(ResponseCode.NO_DATA));

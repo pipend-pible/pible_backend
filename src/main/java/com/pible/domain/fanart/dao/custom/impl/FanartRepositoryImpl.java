@@ -1,5 +1,6 @@
 package com.pible.domain.fanart.dao.custom.impl;
 
+import com.pible.common.Constants;
 import com.pible.common.entity.FanartEntity;
 import com.pible.domain.channel.model.ContentDto;
 import com.pible.domain.channel.model.FanartContentRes;
@@ -59,7 +60,7 @@ public class FanartRepositoryImpl extends QuerydslRepositorySupport implements C
                         eq(userEntity.id, contentDto.getUserId()),
                         containsList(tagEntity.tag, contentDto.getTagList()),
                         eq(channelEntity.id, channelId),
-                        eq(imageEntity.thumbnailYn, "Y")
+                        eq(imageEntity.thumbnailYn, Constants.YES)
                 )
                 .groupBy(channelEntity.id, fanartEntity.id, channelEntity.category, fanartEntity.title, userEntity.id,
                         userEntity.email, userEntity.nickName, fanartEntity.likeCount, fanartEntity.hitCount, imageEntity.imageUrl)

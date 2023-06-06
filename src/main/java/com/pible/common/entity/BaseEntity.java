@@ -1,5 +1,6 @@
 package com.pible.common.entity;
 
+import com.pible.common.Constants;
 import com.pible.common.converter.DateTimeConverter;
 import lombok.Getter;
 import org.hibernate.annotations.ColumnDefault;
@@ -25,9 +26,9 @@ public class BaseEntity {
     @Convert(converter = DateTimeConverter.class)
     private LocalDateTime updateDate;
     @ColumnDefault("'N'")
-    private String deleteYn = "N";
+    private String deleteYn = Constants.NO;
 
     public void delete() {
-        this.deleteYn = "Y";
+        this.deleteYn = Constants.YES;
     }
 }

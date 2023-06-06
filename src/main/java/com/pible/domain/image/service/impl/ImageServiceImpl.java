@@ -1,6 +1,7 @@
 package com.pible.domain.image.service.impl;
 
 import com.cloudinary.utils.ObjectUtils;
+import com.pible.common.Constants;
 import com.pible.common.entity.BoardEntity;
 import com.pible.common.entity.FanartEntity;
 import com.pible.common.entity.ImageEntity;
@@ -45,6 +46,7 @@ public class ImageServiceImpl implements ImageService {
                             .oriImageName(file.getOriginalFilename())
                             .boardEntity(boardEntity)
                             .fanartEntity(fanartEntity)
+                            .thumbnailYn(Constants.NO)
                             .build()
             );
         }
@@ -66,6 +68,7 @@ public class ImageServiceImpl implements ImageService {
                 .imageUrl(fileUrl)
                 .oriImageName(multipartFile.getOriginalFilename())
                 .fanartEntity(fanartEntity)
+                .thumbnailYn(Constants.YES)
                 .build()
         );
     }

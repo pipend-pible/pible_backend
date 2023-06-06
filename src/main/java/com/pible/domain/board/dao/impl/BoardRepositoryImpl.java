@@ -1,8 +1,8 @@
 package com.pible.domain.board.dao.impl;
 
+import com.pible.common.Constants;
 import com.pible.common.entity.BoardEntity;
 import com.pible.domain.board.dao.custom.CustomBoardRepository;
-import com.pible.domain.board.model.BoardDto;
 import com.pible.domain.channel.model.BoardContentRes;
 import com.pible.domain.channel.model.ContentDto;
 import com.querydsl.core.types.Projections;
@@ -14,7 +14,6 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
-import java.util.Optional;
 
 import static com.pible.common.entity.QBoardEntity.boardEntity;
 import static com.pible.common.entity.QBoradTagMappingEntity.boradTagMappingEntity;
@@ -84,7 +83,7 @@ public class BoardRepositoryImpl extends QuerydslRepositorySupport implements Cu
 
     private BooleanExpression isAnonymous(String boardAnonymous) {
         if(!StringUtils.hasLength(boardAnonymous)) {
-            boardAnonymous = "N";
+            boardAnonymous = Constants.NO;
         }
 
         return boardEntity.anonymousYn.eq(boardAnonymous);
