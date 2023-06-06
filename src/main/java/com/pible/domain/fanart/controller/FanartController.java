@@ -34,7 +34,7 @@ public class FanartController {
     }
 
     @GetMapping("/list")
-    public List<FanartContentRes> getFanartList(@RequestBody @Valid ContentDto contentDto) {
+    public List<FanartContentRes> getFanartList(@Valid ContentDto contentDto) {
         return fanartService.getFanartList(contentDto);
     }
 }
