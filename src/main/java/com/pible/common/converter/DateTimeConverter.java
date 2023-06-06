@@ -10,11 +10,11 @@ import java.time.temporal.ChronoUnit;
 public class DateTimeConverter implements AttributeConverter<LocalDateTime, Timestamp> {
     @Override
     public Timestamp convertToDatabaseColumn(LocalDateTime attribute) {
-        return Timestamp.valueOf(attribute);
+        return attribute == null ? null : Timestamp.valueOf(attribute);
     }
 
     @Override
     public LocalDateTime convertToEntityAttribute(Timestamp dbData) {
-        return dbData.toLocalDateTime().truncatedTo(ChronoUnit.SECONDS);
+        return dbData == null ? null : dbData.toLocalDateTime().truncatedTo(ChronoUnit.SECONDS);
     }
 }

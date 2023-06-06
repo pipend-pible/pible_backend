@@ -57,8 +57,7 @@ public class CommentServiceImpl implements CommentService {
     @Override
     @Transactional
     public CommentRes createComment(CommentDto commentDto) {
-        UserEntity userEntity = userRepository.findById(commentDto.getUserId())
-                .orElseThrow(() -> new BusinessException(ResponseCode.NO_DATA));
+        UserEntity userEntity = userRepository.findById(commentDto.getUserId()).orElseThrow(() -> new BusinessException(ResponseCode.NO_DATA));
         BoardEntity boardEntity = null;
         FanartEntity fanartEntity = null;
 
