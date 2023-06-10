@@ -11,7 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -34,7 +33,7 @@ public class FanartController {
     }
 
     @GetMapping("/list")
-    public List<FanartContentRes> getFanartList(@Valid ContentDto contentDto) {
+    public List<FanartContentRes> getFanartList(ContentDto contentDto) {
         return fanartService.getFanartList(contentDto);
     }
 }

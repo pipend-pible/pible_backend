@@ -7,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -28,7 +27,7 @@ public class CommentController {
     }
 
     @PostMapping("")
-    public CommentRes createComment(@RequestBody @Valid CommentDto commentDto) {
+    public CommentRes createComment(@RequestBody CommentDto commentDto) {
         return commentService.createComment(commentDto);
     }
 
@@ -43,7 +42,7 @@ public class CommentController {
     }
 
     @PutMapping("/{commentId}")
-    public boolean modifyComment(@RequestBody @Valid CommentDto commentDto, @PathVariable Long commentId) {
+    public boolean modifyComment(@RequestBody CommentDto commentDto, @PathVariable Long commentId) {
         return commentService.modifyComment(commentDto, commentId);
     }
 

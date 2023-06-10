@@ -10,7 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -37,7 +36,7 @@ public class BoardController {
     }
 
     @PostMapping("/modify/{boardId}")
-    public BoardRes modifyBoard(@PathVariable Long boardId, @RequestBody @Valid BoardDto boardDto){
+    public BoardRes modifyBoard(@PathVariable Long boardId, @RequestBody BoardDto boardDto){
         return boardService.modifyBoard(boardId, boardDto);
     }
 

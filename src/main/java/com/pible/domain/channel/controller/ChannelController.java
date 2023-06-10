@@ -9,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -20,7 +19,7 @@ public class ChannelController {
     private final ChannelService channelService;
 
     @PostMapping("/create")
-    public ChannelRes saveChannel(@RequestBody @Valid ChannelDto channelDto) {
+    public ChannelRes saveChannel(@RequestBody ChannelDto channelDto) {
         return channelService.saveChannel(channelDto);
     }
 
