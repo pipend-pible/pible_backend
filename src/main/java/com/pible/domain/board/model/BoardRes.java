@@ -7,6 +7,7 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -18,4 +19,5 @@ public class BoardRes extends BoardDto {
     @NotNull
     private Long boardId;
     private List<String> imageUrlList;
+    private LocalDateTime createDate;
 }

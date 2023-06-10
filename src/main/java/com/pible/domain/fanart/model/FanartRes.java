@@ -7,6 +7,7 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -18,4 +19,5 @@ public class FanartRes extends FanartDto{
     @NotNull
     private Long fanartId;
     private List<String> imageUrlList;
+    private LocalDateTime createDate;
 }
