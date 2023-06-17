@@ -15,6 +15,7 @@ import org.springframework.util.StringUtils;
 
 import java.util.List;
 
+import static com.pible.common.entity.QBoardCategoryEntity.boardCategoryEntity;
 import static com.pible.common.entity.QBoardEntity.boardEntity;
 import static com.pible.common.entity.QBoradTagMappingEntity.boradTagMappingEntity;
 import static com.pible.common.entity.QChannelEntity.channelEntity;
@@ -34,7 +35,7 @@ public class BoardRepositoryImpl extends QuerydslRepositorySupport implements Cu
         return queryFactory.select(
                 Projections.constructor(BoardContentRes.class,
                         channelEntity.id,
-                        channelEntity.category,
+                        boardCategoryEntity.categoryName.as("category"),
                         boardEntity.title,
                         userEntity.id,
                         userEntity.email,
@@ -50,6 +51,7 @@ public class BoardRepositoryImpl extends QuerydslRepositorySupport implements Cu
                 .join(boardEntity.channelEntity, channelEntity)
                     .on(channelEntity.id.eq(channelId))
                 .join(boardEntity.userEntity, userEntity)
+                .join(boardEntity.boardCategoryEntity, boardCategoryEntity)
                 .leftJoin(boradTagMappingEntity)
                     .on(boradTagMappingEntity.boardEntity.eq(boardEntity))
                 .leftJoin(tagEntity)

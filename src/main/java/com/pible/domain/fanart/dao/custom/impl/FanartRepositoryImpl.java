@@ -13,6 +13,7 @@ import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport
 import java.util.List;
 
 import static com.pible.common.entity.QChannelEntity.channelEntity;
+import static com.pible.common.entity.QFanartCategoryEntity.fanartCategoryEntity;
 import static com.pible.common.entity.QFanartEntity.fanartEntity;
 import static com.pible.common.entity.QFanartTagMappingEntity.fanartTagMappingEntity;
 import static com.pible.common.entity.QImageEntity.imageEntity;
@@ -33,7 +34,7 @@ public class FanartRepositoryImpl extends QuerydslRepositorySupport implements C
         return queryFactory.select(
                 Projections.constructor(FanartContentRes.class,
                         channelEntity.id,
-                        channelEntity.category,
+                        fanartCategoryEntity.categoryName.as("category"),
                         fanartEntity.title,
                         userEntity.id,
                         userEntity.email,
@@ -49,6 +50,7 @@ public class FanartRepositoryImpl extends QuerydslRepositorySupport implements C
                 .from(fanartEntity)
                 .join(fanartEntity.channelEntity, channelEntity)
                 .join(fanartEntity.userEntity, userEntity)
+                .join(fanartEntity.fanartCategoryEntity, fanartCategoryEntity)
                 .leftJoin(fanartTagMappingEntity)
                     .on(fanartTagMappingEntity.fanartEntity.eq(fanartEntity))
                 .leftJoin(tagEntity)
