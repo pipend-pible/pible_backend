@@ -62,7 +62,7 @@ public class BoardRepositoryImpl extends QuerydslRepositorySupport implements Cu
                         eqUserId(contentDto.getUserId()),
                         containsTags(contentDto.getTagList())
                 )
-                .groupBy(channelEntity.id, boardEntity.id, channelEntity.category, boardEntity.title, userEntity.id,
+                .groupBy(channelEntity.id, boardEntity.id, boardCategoryEntity.categoryName, boardEntity.title, userEntity.id,
                         userEntity.email, userEntity.nickName, boardEntity.likeCount, boardEntity.hitCount)
                 .fetch();
     }

@@ -64,7 +64,7 @@ public class FanartRepositoryImpl extends QuerydslRepositorySupport implements C
                         eq(channelEntity.id, channelId),
                         eq(imageEntity.thumbnailYn, Constants.YES)
                 )
-                .groupBy(channelEntity.id, fanartEntity.id, channelEntity.category, fanartEntity.title, userEntity.id,
+                .groupBy(channelEntity.id, fanartEntity.id, fanartCategoryEntity.categoryName, fanartEntity.title, userEntity.id,
                         userEntity.email, userEntity.nickName, fanartEntity.likeCount, fanartEntity.hitCount, imageEntity.imageUrl)
                 .fetch();
     }
