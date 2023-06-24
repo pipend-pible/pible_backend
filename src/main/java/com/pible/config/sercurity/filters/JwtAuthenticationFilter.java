@@ -5,8 +5,9 @@ import com.pible.config.sercurity.model.UserAuthenticationToken;
 import com.pible.config.sercurity.utils.JwtUtils;
 import io.jsonwebtoken.Claims;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.http.HttpStatus;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -16,7 +17,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Slf4j
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
@@ -32,25 +36,22 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
         try {
             String jwt = jwtUtils.getJwtFromRequest(request);
-            if (StringUtils.isNotEmpty(jwt) && jwtUtils.validateToken(jwt)) {
-                Claims claims = jwtUtils.getData(jwt);
-                String nickName = String.valueOf(claims.get("nickName"));
-                List<GrantedAuthority> authorities = (List)claims.get("authorities");
-
-                PibleUser pibleUser = new PibleUser(claims.getSubject(), null, authorities, nickName);
-                UserAuthenticationToken authenticationToken = new UserAuthenticationToken(pibleUser);
-                SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-            } else {
-                if (StringUtils.isEmpty(jwt)) {
-                    request.setAttribute("unauthorization", "401 인증키 없음.");
-                }
-
-                if (jwtUtils.validateToken(jwt)) {
-                    request.setAttribute("unauthorization", "401-001 인증키 만료.");
-                }
+            if(!jwtUtils.validateToken(jwt)) {
+                response.sendError(HttpStatus.SC_UNAUTHORIZED);
+                return;
             }
+
+            Claims claims = jwtUtils.getData(jwt);
+            String nickName = String.valueOf(claims.get("nickName"));
+            List<LinkedHashMap<String, String>> linkedAuthorities = (List<LinkedHashMap<String, String>>) claims.get("authorities");
+            Set<GrantedAuthority> authorities = linkedAuthorities.stream().flatMap(linkedHashMap -> linkedHashMap.values().stream().map(SimpleGrantedAuthority::new)).collect(Collectors.toSet());
+
+            PibleUser pibleUser = new PibleUser(claims.getSubject(), "temporal", authorities, nickName);
+            UserAuthenticationToken authenticationToken = new UserAuthenticationToken(pibleUser);
+            SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         } catch (Exception ex) {
-            log.error("Could not set user authentication in security context", ex);
+            response.sendError(HttpStatus.SC_UNAUTHORIZED);
+            return;
         }
 
         filterChain.doFilter(request, response);

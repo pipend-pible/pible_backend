@@ -7,6 +7,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
+import java.util.Collection;
 import java.util.List;
 
 @Getter
@@ -19,7 +20,7 @@ public class PibleUser extends User {
         this.userNickName = userEntity.getNickName();
     }
 
-    public PibleUser(String email, String userPassword, List<GrantedAuthority> authorities, String userNickName) {
+    public PibleUser(String email, String userPassword, Collection<GrantedAuthority> authorities, String userNickName) {
         super(email, userPassword, authorities);
         this.userNickName = userNickName;
     }

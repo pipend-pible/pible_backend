@@ -20,7 +20,7 @@ public class JwtUtils {
 
     public JwtUtils(final String textKey) {
         key = Keys.hmacShaKeyFor(textKey.getBytes());
-        tokenValidMilliseconds = 1000L * 60;
+        tokenValidMilliseconds = 1000L * 60 * 60 * 2;
         parser = Jwts.parserBuilder().setSigningKey(key).build();
     }
 
