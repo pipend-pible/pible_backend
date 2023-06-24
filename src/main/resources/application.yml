@@ -21,9 +21,24 @@ spring:
       on-profile: local
   jackson:
     property-naming-strategy: SNAKE_CASE
+  cache:
+    jcache:
+      config: classpath:ehcache.xml
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ENC(zNRrOjuRwMVS5YKn0PnFF420NqtVraFUndKJxRAQ4V9do9pHXw6aFA==)
+    password: ENC(pNnyGh0JmlpsjELXqmSzRAVrNPKl5ex2tByPIpchr7k=)
+    properties:
+      mail:
+        smtp:
+          starttls:
+            enable: true
+          auth: true
+
 security:
   ignore:
-    url: /login, /sign-up/
+    url: /auth/**, /login/**
   cors:
     origin: http://localhost:8081
 

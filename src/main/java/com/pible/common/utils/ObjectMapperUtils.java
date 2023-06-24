@@ -19,4 +19,8 @@ public class ObjectMapperUtils {
             throw new BusinessException(ResponseCode.FAIL);
         }
     }
+
+    public static ObjectMapper getObjectMapper() {
+        return objectMapper;
+    }
 }

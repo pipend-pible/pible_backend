@@ -25,12 +25,16 @@ public class CustomUserRepositoryImpl extends QuerydslRepositorySupport implemen
     public List<AuthorityEntity> selectUserAuthorityList(Long userId) {
         return queryFactory.select(
                         Projections.constructor(AuthorityEntity.class,
-                                authorityEntity
+                                authorityEntity.authority,
+                                authorityEntity.authCd,
+                                authorityEntity.createDate
                         )
                 )
                 .from(authorityEntity)
-                .join(userAuthorityEntity.authorityEntity, authorityEntity)
-                .join(userEntity, userAuthorityEntity.userEntity)
+                .join(userAuthorityEntity)
+                    .on(userAuthorityEntity.authorityEntity.authority.eq(authorityEntity.authority))
+                .join(userEntity)
+                    .on(userEntity.id.eq(userAuthorityEntity.userEntity.id))
                 .where(userEntity.id.eq(userId))
                 .fetch();
     }

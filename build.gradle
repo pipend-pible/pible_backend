@@ -24,6 +24,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
+
     implementation "com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.5"
     implementation 'org.mapstruct:mapstruct:1.5.3.Final'
     implementation 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
@@ -37,9 +39,6 @@ dependencies {
     implementation 'com.cloudinary:cloudinary-http44:1.33.0'
 
     compileOnly 'org.projectlombok:lombok'
-
-    developmentOnly 'org.springframework.boot:spring-boot-devtools'
-
     runtimeOnly 'org.postgresql:postgresql'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
@@ -47,6 +46,10 @@ dependencies {
 
     annotationProcessor 'org.projectlombok:lombok'
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final'
+
+    implementation 'org.springframework.boot:spring-boot-starter-cache'
+    implementation 'org.ehcache:ehcache:3.10.6'
+    implementation 'javax.cache:cache-api:1.1.1'
 
     // QueryDSL
     implementation 'com.querydsl:querydsl-jpa'

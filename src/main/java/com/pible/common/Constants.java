@@ -7,4 +7,6 @@ import lombok.NoArgsConstructor;
 public final class Constants {
     public static final String YES = "Y";
     public static final String NO = "N";
+
+    public static final String ehcacheKeyName = "emailAuthStr";
 }

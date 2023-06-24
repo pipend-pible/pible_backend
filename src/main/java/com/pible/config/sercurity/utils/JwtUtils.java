@@ -7,6 +7,7 @@ import io.jsonwebtoken.security.SignatureException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StringUtils;
 
+import javax.servlet.http.HttpServletRequest;
 import java.security.Key;
 import java.util.Date;
 import java.util.Map;
@@ -23,7 +24,7 @@ public class JwtUtils {
         parser = Jwts.parserBuilder().setSigningKey(key).build();
     }
 
-    public String createToken(String subject, Map<String, Object> data) {
+    public String createToken(String subject, Map<String, Object> data, long tokenValidMilliseconds) {
         Claims claims = Jwts.claims().setSubject(subject);
         claims.putAll(data);
         Date now = new Date();
@@ -33,6 +34,10 @@ public class JwtUtils {
                 .setExpiration(new Date(now.getTime() + tokenValidMilliseconds))
                 .signWith(key)
                 .compact();
+    }
+
+    public String createToken(String subject, Map<String, Object> data) {
+        return createToken(subject, data, tokenValidMilliseconds);
     }
 
     public boolean validateToken(String token) {
@@ -61,5 +66,13 @@ public class JwtUtils {
 
     public Claims getData(String token) {
         return parser.parseClaimsJws(token).getBody();
+    }
+
+    public String getJwtFromRequest(HttpServletRequest request) {
+        String bearerToken = request.getHeader("Authorization");
+        if (org.apache.commons.lang3.StringUtils.isNotEmpty(bearerToken) && bearerToken.startsWith("Bearer ")) {
+            return bearerToken.substring("Bearer ".length());
+        }
+        return null;
     }
 }

@@ -8,6 +8,7 @@ public class BusinessException extends RuntimeException{
     private static final long serialVersionUID = 1L;
     private final ResponseCode responseCode;
     public BusinessException(ResponseCode responseCode) {
+        super(responseCode.getMessage());
         this.responseCode = responseCode;
     }
 }

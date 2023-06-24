@@ -1,15 +1,13 @@
-package com.pible.config.sercurity;
+package com.pible.config.sercurity.filters;
 
 import com.pible.config.sercurity.model.PibleUser;
 import com.pible.config.sercurity.model.UserAuthenticationToken;
 import com.pible.config.sercurity.utils.JwtUtils;
 import io.jsonwebtoken.Claims;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -17,19 +15,23 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 @Slf4j
-@Component
-@RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtUtils jwtUtils;
+    private final String[] ignored;
+    public JwtAuthenticationFilter(JwtUtils jwtUtils, String[] ignored) {
+        this.jwtUtils = jwtUtils;
+        this.ignored = ignored;
+    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
         try {
-            String jwt = getJwtFromRequest(request);
+            String jwt = jwtUtils.getJwtFromRequest(request);
             if (StringUtils.isNotEmpty(jwt) && jwtUtils.validateToken(jwt)) {
                 Claims claims = jwtUtils.getData(jwt);
                 String nickName = String.valueOf(claims.get("nickName"));
@@ -48,17 +50,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 }
             }
         } catch (Exception ex) {
-            logger.error("Could not set user authentication in security context", ex);
+            log.error("Could not set user authentication in security context", ex);
         }
 
         filterChain.doFilter(request, response);
     }
 
-    private String getJwtFromRequest(HttpServletRequest request) {
-        String bearerToken = request.getHeader("Authorization");
-        if (StringUtils.isNotEmpty(bearerToken) && bearerToken.startsWith("Bearer ")) {
-            return bearerToken.substring("Bearer ".length());
-        }
-        return null;
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+        return Arrays.stream(ignored).anyMatch((ignore) -> request.getRequestURI().contains(ignore.substring(0, ignore.lastIndexOf("/*"))));
     }
 }

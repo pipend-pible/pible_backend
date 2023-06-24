@@ -15,13 +15,13 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(BusinessException.class)
     public PibleResponse handleBusinessException(BusinessException e) {
-        log.error(e.getResponseCode().getMessage());
+        log.error(e.getResponseCode().getMessage(), e);
         return new PibleResponse(e.getResponseCode());
     }
 
     @ExceptionHandler(Exception.class)
     public PibleResponse handleException(Exception e) {
-        log.error(e.getMessage());
+        log.error(e.getMessage(), e);
         return new PibleResponse(ResponseCode.FAIL);
     }
 }

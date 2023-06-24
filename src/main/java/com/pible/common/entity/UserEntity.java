@@ -24,10 +24,13 @@ public class UserEntity extends BaseEntity{
     @GeneratedValue(generator = "userSequence")
     @Column(name = "user_id")
     private Long id;
+    @Column(unique = true)
     private String email;
 
     @Convert(converter = PasswordConverter.class)
     private String password;
+
+    @Column(unique = true)
     private String nickName;
     private String verifyAgeYn;
     private String emailCheckYn;

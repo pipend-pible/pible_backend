@@ -21,7 +21,7 @@ public class CustomResponseAdvice implements ResponseBodyAdvice<Object> {
                                          MediaType selectedContentType,
                                          Class<? extends HttpMessageConverter<?>> selectedConverterType,
                                          ServerHttpRequest request, ServerHttpResponse response) {
-        if(body == null || body instanceof PibleResponse) {
+        if(body instanceof PibleResponse) {
             return body;
         }
 
