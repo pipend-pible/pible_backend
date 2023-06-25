@@ -43,10 +43,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
             Claims claims = jwtUtils.getData(jwt);
             String nickName = String.valueOf(claims.get("nickName"));
+            Long userId = Long.parseLong(String.valueOf(claims.get("if")));
             List<LinkedHashMap<String, String>> linkedAuthorities = (List<LinkedHashMap<String, String>>) claims.get("authorities");
             Set<GrantedAuthority> authorities = linkedAuthorities.stream().flatMap(linkedHashMap -> linkedHashMap.values().stream().map(SimpleGrantedAuthority::new)).collect(Collectors.toSet());
 
-            PibleUser pibleUser = new PibleUser(claims.getSubject(), "temporal", authorities, nickName);
+            PibleUser pibleUser = new PibleUser(claims.getSubject(), "temporal", authorities, nickName, userId);
             UserAuthenticationToken authenticationToken = new UserAuthenticationToken(pibleUser);
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         } catch (Exception ex) {

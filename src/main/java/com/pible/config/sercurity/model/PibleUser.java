@@ -14,15 +14,18 @@ import java.util.List;
 @Setter
 public class PibleUser extends User {
     private String userNickName;
+    private Long userId;
 
     public PibleUser(UserEntity userEntity, List<SimpleGrantedAuthority> authorityList) {
         super(userEntity.getEmail(), userEntity.getPassword(), authorityList);
         this.userNickName = userEntity.getNickName();
+        this.userId = userEntity.getId();
     }
 
-    public PibleUser(String email, String userPassword, Collection<GrantedAuthority> authorities, String userNickName) {
+    public PibleUser(String email, String userPassword, Collection<GrantedAuthority> authorities, String userNickName, Long userId) {
         super(email, userPassword, authorities);
         this.userNickName = userNickName;
+        this.userId = userId;
     }
 }
 

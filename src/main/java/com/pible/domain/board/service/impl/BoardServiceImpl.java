@@ -3,6 +3,7 @@ package com.pible.domain.board.service.impl;
 import com.pible.common.entity.*;
 import com.pible.common.enums.ResponseCode;
 import com.pible.common.exception.BusinessException;
+import com.pible.config.sercurity.utils.SecurityUtils;
 import com.pible.domain.board.dao.BoardRepository;
 import com.pible.domain.board.mapper.BoardMapper;
 import com.pible.domain.board.model.BoardDto;
@@ -48,8 +49,7 @@ public class BoardServiceImpl implements BoardService {
 
         boardEntity.setRelation(
                 channelRepository.getReferenceById(boardDto.getChannelId()),
-                // TODO 회원가입, 인증 이후
-                userRepository.getReferenceById(boardDto.getUserId()),
+                userRepository.getReferenceById(SecurityUtils.getUserId()),
                 boardCategoryRepository.getReferenceById(boardDto.getBoardCategoryId())
         );
 
@@ -134,8 +134,7 @@ public class BoardServiceImpl implements BoardService {
         boardClaimRepository.save(BoardClaimEntity.builder()
                 .claimReason(boardClaimDto.getClaimReason())
                 .boardEntity(boardEntity)
-                // TODO 회원가입, 인증 이후
-                .userEntity(userRepository.getReferenceById(1L))
+                .userEntity(userRepository.getReferenceById(SecurityUtils.getUserId()))
                 .build());
 
         return true;

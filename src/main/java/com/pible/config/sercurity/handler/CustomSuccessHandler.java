@@ -28,6 +28,7 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
 
         claimMap.put("nickName", pibleUser.getUserNickName());
         claimMap.put("authorities", pibleUser.getAuthorities());
+        claimMap.put("if", pibleUser.getUserId());
 
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");

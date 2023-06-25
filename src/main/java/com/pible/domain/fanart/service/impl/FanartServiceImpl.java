@@ -6,6 +6,7 @@ import com.pible.common.entity.ImageEntity;
 import com.pible.common.entity.TagEntity;
 import com.pible.common.enums.ResponseCode;
 import com.pible.common.exception.BusinessException;
+import com.pible.config.sercurity.utils.SecurityUtils;
 import com.pible.domain.category.fanart.dao.FanartCategoryRepository;
 import com.pible.domain.channel.dao.ChannelRepository;
 import com.pible.domain.channel.model.ContentDto;
@@ -49,8 +50,7 @@ public class FanartServiceImpl implements FanartService {
 
         fanartEntity.setRelation(
                 channelRepository.getReferenceById(fanartDto.getChannelId()),
-                // TODO 회원가입, 인증 이후
-                userRepository.getReferenceById(fanartDto.getUserId()),
+                userRepository.getReferenceById(SecurityUtils.getUserId()),
                 fanartCategoryRepository.getReferenceById(fanartDto.getFanartCategoryId())
         );
 

@@ -18,7 +18,6 @@ import java.util.List;
 public class FanartDto {
     @NotNull
     private Long channelId;
-    @NotNull
     private Long userId;
     @NotNull
     private Long fanartCategoryId;
