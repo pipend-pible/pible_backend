@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import java.time.LocalDateTime;
+
 @Getter
 @SuperBuilder
 @NoArgsConstructor
@@ -14,4 +16,5 @@ public class CommentRes extends CommentDto {
     private String nickName;
     private Integer likeCount;
     private Integer claimCount;
+    private LocalDateTime createDate;
 }
