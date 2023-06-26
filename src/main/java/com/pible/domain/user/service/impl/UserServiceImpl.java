@@ -24,6 +24,7 @@ import javax.cache.CacheManager;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import static com.pible.common.Constants.ehcacheKeyName;
 
@@ -85,6 +86,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public void signUp(UserDto userDto) {
         Cache<String, String> cache = getCache();
 

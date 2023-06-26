@@ -128,6 +128,7 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
+    @Transactional
     public boolean claimBoard(Long boardId, BoardClaimDto boardClaimDto) {
         BoardEntity boardEntity = boardRepository.findById(boardId).orElseThrow(() -> new BusinessException(ResponseCode.NO_DATA));
 
