@@ -19,6 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,6 +40,7 @@ public class CommentServiceImpl implements CommentService {
                         .orElseThrow(() -> new BusinessException(ResponseCode.FAIL))
                 )
                 .stream()
+                .sorted(Comparator.comparing(CommentEntity::getCreateDate))
                 .map(commentMapper::entityToCommentRes)
                 .collect(Collectors.toList());
     }
@@ -50,6 +52,7 @@ public class CommentServiceImpl implements CommentService {
                                 .orElseThrow(() -> new BusinessException(ResponseCode.FAIL))
                 )
                 .stream()
+                .sorted(Comparator.comparing(CommentEntity::getCreateDate))
                 .map(commentMapper::entityToCommentRes)
                 .collect(Collectors.toList());
     }
