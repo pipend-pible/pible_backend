@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 
@@ -17,8 +18,9 @@ import javax.persistence.*;
 @NoArgsConstructor
 @DynamicInsert
 @DynamicUpdate
+@Where(clause = "delete_yn = 'N'")
 @SequenceGenerator(allocationSize = 1, name = "channelSequence", sequenceName = "channel_sequence", schema = "pible")
-public class ChannelEntity extends BaseEntity{
+public class ChannelEntity extends BaseEntity {
 
     @Id
     @GeneratedValue(generator = "channelSequence")

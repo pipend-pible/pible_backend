@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 
@@ -13,7 +14,8 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @DynamicUpdate
-public class RoleEntity extends BaseEntity{
+@Where(clause = "delete_yn = 'N'")
+public class RoleEntity extends BaseEntity {
 
     @Id
     @Column(name = "role_id")

@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @DynamicUpdate
 @SequenceGenerator(allocationSize = 1, name = "userSequence", sequenceName = "user_sequence", schema = "pible")
-public class UserEntity extends BaseEntity{
+public class UserEntity extends BaseEntity {
 
     @Id
     @GeneratedValue(generator = "userSequence")

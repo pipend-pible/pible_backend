@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 
@@ -15,6 +16,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Getter
 @DynamicUpdate
+@Where(clause = "delete_yn = 'N'")
 @SequenceGenerator(allocationSize = 1, name = "BoardCategorySequence", sequenceName = "board_category_sequence", schema = "pible")
 public class BoardCategoryEntity extends BaseEntity{
 

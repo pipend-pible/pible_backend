@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 
@@ -17,6 +18,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @DynamicUpdate
+@Where(clause = "delete_yn = 'N'")
 @SequenceGenerator(allocationSize = 1, name = "fanartSequence", sequenceName = "fanart_sequence", schema = "pible")
 public class FanartEntity extends BaseEntity {
 
