@@ -21,7 +21,7 @@ public class BoardController {
 
     @PostMapping("/create")
     public BoardRes saveBoard(@RequestParam("boardDto") String board,
-                              @RequestParam("images") List<MultipartFile> multipartFileList){
+                              @RequestParam(value = "images", required = false) List<MultipartFile> multipartFileList){
         return boardService.saveBoard(multipartFileList, ObjectMapperUtils.readValue(board, BoardDto.class));
     }
 
