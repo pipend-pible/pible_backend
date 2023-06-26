@@ -1,5 +1,6 @@
 package com.pible.common.entity;
 
+import com.pible.common.converter.YNConverter;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
@@ -24,8 +25,11 @@ public class CommentEntity extends BaseEntity{
     @Column(name = "comment_id")
     private Long id;
     private String content;
+
     @ColumnDefault("'N'")
+    @Convert(converter = YNConverter.class)
     private String anonymousYn;
+
     @ColumnDefault("0")
     private Integer likeCount;
     @ColumnDefault("0")

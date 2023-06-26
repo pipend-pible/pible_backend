@@ -1,5 +1,6 @@
 package com.pible.common.entity;
 
+import com.pible.common.converter.YNConverter;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -25,8 +26,12 @@ public class ImageEntity {
     private Long id;
     private String imageUrl;
     private String oriImageName;
+
     @ColumnDefault("'N'")
+    @Convert(converter = YNConverter.class)
     private String repImageYn;
+
+    @Convert(converter = YNConverter.class)
     private String thumbnailYn;
 
     @ManyToOne(fetch = FetchType.LAZY)

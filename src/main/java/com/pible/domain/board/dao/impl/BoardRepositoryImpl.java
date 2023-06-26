@@ -1,6 +1,5 @@
 package com.pible.domain.board.dao.impl;
 
-import com.pible.common.Constants;
 import com.pible.common.entity.BoardEntity;
 import com.pible.domain.board.dao.custom.CustomBoardRepository;
 import com.pible.domain.channel.model.BoardContentRes;
@@ -85,7 +84,7 @@ public class BoardRepositoryImpl extends QuerydslRepositorySupport implements Cu
 
     private BooleanExpression isAnonymous(String boardAnonymous) {
         if(!StringUtils.hasLength(boardAnonymous)) {
-            boardAnonymous = Constants.NO;
+            return null;
         }
 
         return boardEntity.anonymousYn.eq(boardAnonymous);

@@ -1,6 +1,10 @@
 package com.pible.common.entity;
 
-import lombok.*;
+import com.pible.common.converter.YNConverter;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
@@ -31,10 +35,15 @@ public class BoardEntity extends BaseEntity{
     @ColumnDefault("0")
     private int hitCount;
     @ColumnDefault("'N'")
+    @Convert(converter = YNConverter.class)
     private String anonymousYn;
+
     @ColumnDefault("'N'")
+    @Convert(converter = YNConverter.class)
     private String displayYn;
+
     @ColumnDefault("'N'")
+    @Convert(converter = YNConverter.class)
     private String adultYn;
 
     @ManyToOne(fetch = FetchType.LAZY)

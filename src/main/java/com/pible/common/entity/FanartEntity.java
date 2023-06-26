@@ -1,5 +1,6 @@
 package com.pible.common.entity;
 
+import com.pible.common.converter.YNConverter;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -31,8 +32,13 @@ public class FanartEntity extends BaseEntity {
     private int likeCount;
     @ColumnDefault("0")
     private int disLikeCount;
+    @Convert(converter = YNConverter.class)
     private String myArtYn;
+
+    @Convert(converter = YNConverter.class)
     private String displayYn;
+
+    @Convert(converter = YNConverter.class)
     private String adultYn;
 
     @ManyToOne(fetch = FetchType.LAZY)

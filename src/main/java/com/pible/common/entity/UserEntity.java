@@ -1,6 +1,7 @@
 package com.pible.common.entity;
 
 import com.pible.common.converter.PasswordConverter;
+import com.pible.common.converter.YNConverter;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -32,12 +33,24 @@ public class UserEntity extends BaseEntity{
 
     @Column(unique = true)
     private String nickName;
+
+    @Convert(converter = YNConverter.class)
     private String verifyAgeYn;
+
+    @Convert(converter = YNConverter.class)
     private String emailCheckYn;
+
+    @Convert(converter = YNConverter.class)
     private String privacyAgreeYn;
+
+    @Convert(converter = YNConverter.class)
     private String usageYn;
+
     private String userState;
+
+    @Convert(converter = YNConverter.class)
     private String bankAccountYn;
+
     private LocalDateTime deleteDate;
     private String profileMsg;
 
