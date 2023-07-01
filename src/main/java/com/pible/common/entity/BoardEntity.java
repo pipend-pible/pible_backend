@@ -5,12 +5,14 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
+
+import static com.pible.common.Constants.NO;
+import static com.pible.common.Constants.YES;
 
 @Entity
 @Table(name = "board", schema = "pible")
@@ -30,23 +32,17 @@ public class BoardEntity extends BaseEntity{
     private Long id;
     private String title;
     private String content;
-    @ColumnDefault("0")
     private int likeCount;
-    @ColumnDefault("0")
     private int disLikeCount;
-    @ColumnDefault("0")
     private int hitCount;
-    @ColumnDefault("'N'")
     @Convert(converter = YNConverter.class)
-    private String anonymousYn;
+    private String anonymousYn = NO;
 
-    @ColumnDefault("'N'")
     @Convert(converter = YNConverter.class)
-    private String displayYn;
+    private String displayYn = YES;
 
-    @ColumnDefault("'N'")
     @Convert(converter = YNConverter.class)
-    private String adultYn;
+    private String adultYn = NO;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "channel_id")

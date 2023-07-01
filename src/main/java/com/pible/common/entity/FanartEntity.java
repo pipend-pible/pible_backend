@@ -5,11 +5,13 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
+
+import static com.pible.common.Constants.NO;
+import static com.pible.common.Constants.YES;
 
 @Entity
 @Table(name = "fanart", schema = "pible")
@@ -28,20 +30,17 @@ public class FanartEntity extends BaseEntity {
     private Long id;
     private String title;
     private String content;
-    @ColumnDefault("0")
     private int hitCount;
-    @ColumnDefault("0")
     private int likeCount;
-    @ColumnDefault("0")
     private int disLikeCount;
     @Convert(converter = YNConverter.class)
-    private String myArtYn;
+    private String myArtYn = NO;
 
     @Convert(converter = YNConverter.class)
-    private String displayYn;
+    private String displayYn = YES;
 
     @Convert(converter = YNConverter.class)
-    private String adultYn;
+    private String adultYn = NO;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "channel_id")

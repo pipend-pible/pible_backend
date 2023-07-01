@@ -15,7 +15,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @DynamicUpdate
-@SequenceGenerator(allocationSize = 1, name = "userAuthoritySequence", sequenceName = "user_sequence", schema = "pible")
+@SequenceGenerator(allocationSize = 1, name = "userAuthoritySequence", sequenceName = "user_authority_sequence", schema = "pible")
 public class UserAuthorityEntity {
 
     @Id

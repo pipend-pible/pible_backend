@@ -11,6 +11,8 @@ import org.hibernate.annotations.DynamicUpdate;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+import static com.pible.common.Constants.NO;
+
 @Entity
 @Table(name = "user", schema = "pible")
 @Getter
@@ -35,21 +37,14 @@ public class UserEntity extends BaseEntity {
     private String nickName;
 
     @Convert(converter = YNConverter.class)
-    private String verifyAgeYn;
+    private String verifyAgeYn = NO;
 
     @Convert(converter = YNConverter.class)
-    private String emailCheckYn;
-
-    @Convert(converter = YNConverter.class)
-    private String privacyAgreeYn;
-
-    @Convert(converter = YNConverter.class)
-    private String usageYn;
-
+    private String privacyAgreeYn = NO;
     private String userState;
 
     @Convert(converter = YNConverter.class)
-    private String bankAccountYn;
+    private String bankAccountYn = NO;
 
     private LocalDateTime deleteDate;
     private String profileMsg;

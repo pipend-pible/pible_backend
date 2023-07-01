@@ -17,11 +17,8 @@ import javax.persistence.*;
 @Getter
 @DynamicUpdate
 @Where(clause = "delete_yn = 'N'")
-@SequenceGenerator(allocationSize = 1, name = "FanartCategorySequence", sequenceName = "fanart_category_sequence", schema = "pible")
 public class FanartCategoryEntity extends BaseEntity {
-
     @Id
-    @GeneratedValue(generator = "FanartCategorySequence")
     @Column(name = "fanart_category_id")
     private Long id;
     private String categoryName;

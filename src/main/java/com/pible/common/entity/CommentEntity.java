@@ -2,12 +2,13 @@ package com.pible.common.entity;
 
 import com.pible.common.converter.YNConverter;
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
+
+import static com.pible.common.Constants.NO;
 
 @Entity
 @Table(name = "comment", schema = "pible")
@@ -28,14 +29,10 @@ public class CommentEntity extends BaseEntity {
     private Long id;
     private String content;
 
-    @ColumnDefault("'N'")
     @Convert(converter = YNConverter.class)
-    private String anonymousYn;
-
-    @ColumnDefault("0")
-    private Integer likeCount;
-    @ColumnDefault("0")
-    private Integer claimCount;
+    private String anonymousYn = NO;
+    private int likeCount;
+    private int claimCount;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "board_id")

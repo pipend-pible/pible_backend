@@ -36,14 +36,14 @@ public class ChannelEntity extends BaseEntity {
     private String ownerInfo;
     private String ageLimit;
     private String apply;
-    private Integer fanartTotalHitCount;
-    private Integer boardTotalHitCount;
+    private int fanartTotalHitCount;
+    private int boardTotalHitCount;
 
-    public void setBoardTotalHitCount(Integer boardTotalHitCount) {
+    public void setBoardTotalHitCount(int boardTotalHitCount) {
         this.boardTotalHitCount = boardTotalHitCount;
     }
 
-    public void setFanartTotalHitCount(Integer fanartTotalHitCount) {
+    public void setFanartTotalHitCount(int fanartTotalHitCount) {
         this.fanartTotalHitCount = fanartTotalHitCount;
     }
 }

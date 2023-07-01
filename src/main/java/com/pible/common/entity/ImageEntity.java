@@ -5,10 +5,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
+
+import static com.pible.common.Constants.NO;
 
 @Entity
 @Table(name = "image", schema = "pible")
@@ -27,9 +28,8 @@ public class ImageEntity {
     private String imageUrl;
     private String oriImageName;
 
-    @ColumnDefault("'N'")
     @Convert(converter = YNConverter.class)
-    private String repImageYn;
+    private String repImageYn = NO;
 
     @Convert(converter = YNConverter.class)
     private String thumbnailYn;
