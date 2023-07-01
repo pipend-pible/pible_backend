@@ -84,7 +84,7 @@ public class ImageServiceImpl implements ImageService {
                     ).get("url")
             );
         } catch (IOException exception) {
-            throw new BusinessException(ResponseCode.FAIL);
+            throw new BusinessException(ResponseCode.FAILED_UPLOAD_IMAGE);
         }
 
         return fileUrl;

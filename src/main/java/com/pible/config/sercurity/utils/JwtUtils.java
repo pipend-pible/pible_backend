@@ -1,6 +1,5 @@
 package com.pible.config.sercurity.utils;
 
-import com.pible.common.exception.JWTOmissionException;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
@@ -42,23 +41,24 @@ public class JwtUtils {
 
     public boolean validateToken(String token) {
         if (!StringUtils.hasLength(token)) {
-            throw new JWTOmissionException("JWT token is not existed");
+            log.error("token is not existed");
+            return false;
         }
 
         try {
             parser.parseClaimsJws(token);
-        } catch (SignatureException e) {
-            log.error("Invalid JWT signature", e);
-            throw e;
-        } catch (MalformedJwtException e) {
-            log.error("Invalid JWT token", e);
-            throw e;
-        } catch (ExpiredJwtException e) {
-            log.error("Expired JWT token");
-            throw e;
-        } catch (UnsupportedJwtException e) {
-            log.error("Unsupported JWT token", e);
-            throw e;
+        } catch (SignatureException signatureException) {
+            log.error("invalid JWT signature", signatureException);
+            throw signatureException;
+        } catch (MalformedJwtException malformedJwtException) {
+            log.error("invalid JWT token", malformedJwtException);
+            throw malformedJwtException;
+        } catch (ExpiredJwtException expiredJwtException) {
+            log.error("expired JWT token", expiredJwtException);
+            throw expiredJwtException;
+        } catch (UnsupportedJwtException unsupportedJwtException) {
+            log.error("unsupported JWT token", unsupportedJwtException);
+            throw unsupportedJwtException;
         }
 
         return true;

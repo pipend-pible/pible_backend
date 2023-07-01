@@ -26,7 +26,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import static com.pible.common.Constants.ehcacheKeyName;
+import static com.pible.common.Constants.EHCACHE_KEY_NAME;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -56,7 +56,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Cacheable(value = ehcacheKeyName, key = "#userName")
+    @Cacheable(value = EHCACHE_KEY_NAME, key = "#userName")
     public String generateEmailAuthStr(String userName) {
         String emailAuthStr = RandomStringUtils.randomAlphanumeric(5);
 
@@ -91,11 +91,11 @@ public class UserServiceImpl implements UserService {
         Cache<String, String> cache = getCache();
 
         if(StringUtils.isNotEmpty(cache.get(userDto.getUsername()))) {
-            throw new BusinessException(ResponseCode.FAIL);
+            throw new BusinessException(ResponseCode.NOT_AUTHORIZED_EMAIL);
         }
 
         userRepository.findByEmail(userDto.getUsername()).ifPresent((userEntity) -> {
-            throw new BusinessException(ResponseCode.FAIL);
+            throw new BusinessException(ResponseCode.DUPLICATED_USER);
         });
 
         UserEntity userBeforeEntity = userMapper.dtoToEntity(userDto);
@@ -108,6 +108,6 @@ public class UserServiceImpl implements UserService {
     }
 
     private Cache<String, String> getCache() {
-        return cacheManager.getCache(ehcacheKeyName, String.class, String.class);
+        return cacheManager.getCache(EHCACHE_KEY_NAME, String.class, String.class);
     }
 }

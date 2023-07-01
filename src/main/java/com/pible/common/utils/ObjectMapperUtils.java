@@ -15,8 +15,8 @@ public class ObjectMapperUtils {
     public static <T> T readValue(String source, Class<T> target) {
         try {
             return objectMapper.readValue(source, target);
-        } catch (JsonProcessingException e) {
-            throw new BusinessException(ResponseCode.FAIL);
+        } catch (JsonProcessingException jsonProcessingException) {
+            throw new BusinessException(ResponseCode.ERROR_JSON_PROCESSING);
         }
     }
 

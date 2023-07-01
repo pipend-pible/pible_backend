@@ -4,7 +4,7 @@ import com.pible.common.enums.ResponseCode;
 import lombok.Getter;
 
 @Getter
-public class BusinessException extends RuntimeException{
+public class BusinessException extends RuntimeException {
     private static final long serialVersionUID = 1L;
     private final ResponseCode responseCode;
     public BusinessException(ResponseCode responseCode) {

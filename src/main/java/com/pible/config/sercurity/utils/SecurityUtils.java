@@ -11,6 +11,6 @@ public class SecurityUtils {
 
     public static Long getUserId() {
         PibleUser user = (PibleUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return Optional.ofNullable(user.getUserId()).orElseThrow(() -> new BusinessException(ResponseCode.FAIL));
+        return Optional.ofNullable(user.getUserId()).orElseThrow(() -> new BusinessException(ResponseCode.NOT_EXISTED_USER_ID));
     }
 }

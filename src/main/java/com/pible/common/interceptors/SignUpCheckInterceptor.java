@@ -1,5 +1,6 @@
 package com.pible.common.interceptors;
 
+import com.pible.common.Constants;
 import com.pible.common.annotations.SignUpChecker;
 import com.pible.common.enums.ResponseCode;
 import com.pible.common.exception.BusinessException;
@@ -26,10 +27,10 @@ public class SignUpCheckInterceptor implements HandlerInterceptor {
         String jwt = jwtUtils.getJwtFromRequest(request);
 
         if(!jwtUtils.validateToken(jwt)) {
-            throw new BusinessException(ResponseCode.FAIL);
+            throw new BusinessException(ResponseCode.NOT_EXIST_TOKEN);
         }
 
-        request.setAttribute("userName", jwtUtils.getData(jwt).getSubject());
+        request.setAttribute(Constants.USER_NAME, jwtUtils.getData(jwt).getSubject());
 
         return true;
     }

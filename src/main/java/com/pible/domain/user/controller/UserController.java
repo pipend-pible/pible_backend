@@ -1,5 +1,6 @@
 package com.pible.domain.user.controller;
 
+import com.pible.common.Constants;
 import com.pible.common.annotations.SignUpChecker;
 import com.pible.common.enums.ResponseCode;
 import com.pible.common.exception.BusinessException;
@@ -58,8 +59,8 @@ public class UserController {
     }
 
     private void checkUserName(HttpServletRequest request, String userName) {
-        if(!userName.equals(request.getAttribute("userName"))) {
-            throw new BusinessException(ResponseCode.FAIL);
+        if(!userName.equals(request.getAttribute(Constants.USER_NAME))) {
+            throw new BusinessException(ResponseCode.NOT_SECURED_SIGN_UP);
         }
     }
 }

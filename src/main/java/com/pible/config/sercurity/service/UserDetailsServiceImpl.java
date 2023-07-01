@@ -28,7 +28,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         List<AuthorityEntity> authorityEntityList = userRepository.selectUserAuthorityList(userEntity.getId());
 
         if(CollectionUtils.isEmpty(authorityEntityList)) {
-            throw new BusinessException(ResponseCode.FAIL);
+            throw new BusinessException(ResponseCode.NOT_EXISTED_AUTHORITY);
         }
 
         List<SimpleGrantedAuthority> authorityList = authorityEntityList
