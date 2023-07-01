@@ -3,9 +3,9 @@ package com.pible.domain.comment.service.impl;
 import com.pible.common.entity.BoardEntity;
 import com.pible.common.entity.CommentEntity;
 import com.pible.common.entity.FanartEntity;
-import com.pible.common.entity.UserEntity;
 import com.pible.common.enums.ResponseCode;
 import com.pible.common.exception.BusinessException;
+import com.pible.config.sercurity.utils.SecurityUtils;
 import com.pible.domain.board.dao.BoardRepository;
 import com.pible.domain.comment.dao.CommentRepository;
 import com.pible.domain.comment.mapper.CommentMapper;
@@ -38,7 +38,7 @@ public class CommentServiceImpl implements CommentService {
     public List<CommentRes> getBoardCommentList(Long boardId) {
         return commentRepository.findAllByBoardEntity(
                 boardRepository.findById(boardId)
-                        .orElseThrow(() -> new BusinessException(ResponseCode.FAIL))
+                        .orElseThrow(() -> new BusinessException(ResponseCode.NO_DATA))
                 )
                 .stream()
                 .sorted(Comparator.comparing(CommentEntity::getCreateDate))
@@ -50,7 +50,7 @@ public class CommentServiceImpl implements CommentService {
     public List<CommentRes> getFanartCommentList(Long fanartId) {
         return commentRepository.findAllByFanartEntity(
                         fanartRepository.findById(fanartId)
-                                .orElseThrow(() -> new BusinessException(ResponseCode.FAIL))
+                                .orElseThrow(() -> new BusinessException(ResponseCode.NO_DATA))
                 )
                 .stream()
                 .sorted(Comparator.comparing(CommentEntity::getCreateDate))
@@ -61,12 +61,11 @@ public class CommentServiceImpl implements CommentService {
     @Override
     @Transactional
     public CommentRes createComment(CommentDto commentDto) {
-        UserEntity userEntity = userRepository.findById(commentDto.getUserId()).orElseThrow(() -> new BusinessException(ResponseCode.NO_DATA));
         BoardEntity boardEntity = null;
         FanartEntity fanartEntity = null;
 
         if(commentDto.getFanartId() != null && commentDto.getBoardId() != null) {
-            throw new BusinessException(ResponseCode.FAIL);
+            throw new BusinessException(ResponseCode.NOT_CORRECT_ESSENTIAL_DATA);
         } else if (commentDto.getBoardId() != null) {
             boardEntity = boardRepository.findById(commentDto.getBoardId())
                     .orElseThrow(() -> new BusinessException(ResponseCode.NO_DATA));
@@ -74,11 +73,11 @@ public class CommentServiceImpl implements CommentService {
             fanartEntity = fanartRepository.findById(commentDto.getFanartId())
                     .orElseThrow(() -> new BusinessException(ResponseCode.NO_DATA));
         } else {
-            throw new BusinessException(ResponseCode.FAIL);
+            throw new BusinessException(ResponseCode.NOT_EXIST_ESSENTIAL_DATA);
         }
 
         CommentEntity commentEntity = commentMapper.dtoToEntity(commentDto);
-        commentEntity.setEntityRelation(boardEntity, fanartEntity, userEntity);
+        commentEntity.setEntityRelation(boardEntity, fanartEntity, userRepository.getReferenceById(SecurityUtils.getUserId()));
 
         return commentMapper.entityToCommentRes(
                 commentRepository.save(commentEntity)
