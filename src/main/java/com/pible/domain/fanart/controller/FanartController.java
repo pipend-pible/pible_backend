@@ -1,6 +1,5 @@
 package com.pible.domain.fanart.controller;
 
-import com.pible.common.utils.ObjectMapperUtils;
 import com.pible.domain.channel.model.ContentDto;
 import com.pible.domain.channel.model.FanartContentRes;
 import com.pible.domain.fanart.model.FanartDto;
@@ -21,10 +20,10 @@ public class FanartController {
     private final FanartService fanartService;
 
     @PostMapping("/create")
-    public FanartRes saveFanart(@RequestParam("fanartDto") String fanart,
+    public FanartRes saveFanart(FanartDto fanartDto,
                                 @RequestParam("images") List<MultipartFile> multipartFileList,
                                 @RequestParam("thumbnail") MultipartFile multipartFile) {
-        return fanartService.saveFanart(multipartFileList, multipartFile, ObjectMapperUtils.readValue(fanart, FanartDto.class));
+        return fanartService.saveFanart(multipartFileList, multipartFile, fanartDto);
     }
 
     @GetMapping("/{fanartId}")

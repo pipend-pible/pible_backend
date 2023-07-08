@@ -51,6 +51,10 @@ dependencies {
     implementation 'org.ehcache:ehcache:3.10.6'
     implementation 'javax.cache:cache-api:1.1.1'
 
+    implementation 'com.navercorp.lucy:lucy-xss-servlet:2.0.1'
+    implementation 'org.apache.commons:commons-text:1.10.0'
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
+
     // QueryDSL
     implementation 'com.querydsl:querydsl-jpa'
     annotationProcessor "com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jpa"

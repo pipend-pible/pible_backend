@@ -68,8 +68,11 @@ public class SecurityConfig {
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).accessDeniedHandler(accessDeniedHandler)
                 .and()
 
-                .formLogin().disable().headers().frameOptions().disable();
+                .formLogin().disable().headers().frameOptions().disable()
 
+                .and();
+
+                http.headers().xssProtection();
                 http.addFilterBefore(new CustomAuthenticationFilter(authenticationManager, customSuccessHandler, customFailureHandler), UsernamePasswordAuthenticationFilter.class);
                 http.addFilterBefore(new JwtAuthenticationFilter(jwtUtils, ignored), UsernamePasswordAuthenticationFilter.class);
         return http.build();

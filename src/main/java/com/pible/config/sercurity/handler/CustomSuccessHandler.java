@@ -1,6 +1,6 @@
 package com.pible.config.sercurity.handler;
 
-import com.pible.common.utils.ObjectMapperUtils;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pible.config.sercurity.model.PibleUser;
 import com.pible.config.sercurity.utils.JwtUtils;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +20,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class CustomSuccessHandler implements AuthenticationSuccessHandler {
     private final JwtUtils jwtUtils;
+    private final ObjectMapper objectMapper;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
@@ -34,11 +35,7 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
         response.setCharacterEncoding("UTF-8");
         response.setStatus(HttpStatus.OK.value());
         response.getWriter().write(
-                ObjectMapperUtils
-                        .getObjectMapper()
-                        .writeValueAsString(
-                                jwtUtils.createToken(pibleUser.getUsername(), claimMap)
-                        )
+                objectMapper.writeValueAsString(jwtUtils.createToken(pibleUser.getUsername(), claimMap))
         );
     }
 }

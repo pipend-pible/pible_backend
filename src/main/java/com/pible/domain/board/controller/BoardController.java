@@ -1,6 +1,5 @@
 package com.pible.domain.board.controller;
 
-import com.pible.common.utils.ObjectMapperUtils;
 import com.pible.domain.board.model.BoardDto;
 import com.pible.domain.board.model.BoardRes;
 import com.pible.domain.board.service.BoardService;
@@ -20,9 +19,9 @@ public class BoardController {
     private final BoardService boardService;
 
     @PostMapping("/create")
-    public BoardRes saveBoard(@RequestParam("boardDto") String board,
-                              @RequestParam(value = "images", required = false) List<MultipartFile> multipartFileList){
-        return boardService.saveBoard(multipartFileList, ObjectMapperUtils.readValue(board, BoardDto.class));
+    public BoardRes saveBoard(@RequestParam(value = "images", required = false) List<MultipartFile> multipartFileList,
+                              BoardDto boardDto) {
+        return boardService.saveBoard(multipartFileList, boardDto);
     }
 
     @GetMapping("/{boardId}")
