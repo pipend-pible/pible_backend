@@ -36,7 +36,6 @@ public class FanartRepositoryImpl extends QuerydslRepositorySupport implements C
                         channelEntity.id,
                         fanartCategoryEntity.categoryName.as("category"),
                         fanartEntity.title,
-                        userEntity.id,
                         userEntity.email,
                         userEntity.nickName,
                         fanartEntity.likeCount,

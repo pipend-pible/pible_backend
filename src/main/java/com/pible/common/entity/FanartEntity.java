@@ -34,12 +34,15 @@ public class FanartEntity extends BaseEntity {
     private int likeCount;
     private int disLikeCount;
     @Convert(converter = YNConverter.class)
+    @Builder.Default
     private String myArtYn = NO;
 
     @Convert(converter = YNConverter.class)
+    @Builder.Default
     private String displayYn = YES;
 
     @Convert(converter = YNConverter.class)
+    @Builder.Default
     private String adultYn = NO;
 
     @ManyToOne(fetch = FetchType.LAZY)

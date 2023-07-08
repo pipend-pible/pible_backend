@@ -15,11 +15,11 @@ public class FanartContentRes extends ContentRes {
     private Long fanartId;
     private String fanartThumbnailImageUrl;
 
-    public FanartContentRes(Long channelId, String category, String title, Long userId,
+    public FanartContentRes(Long channelId, String category, String title,
                             String userEmail, String userNickName, Integer likeCount,
                             Integer hitCount, String delimitedTagList, LocalDateTime createDate, Long boardId,
                             String fanartThumbnailImageUrl) {
-        super(channelId, category, title, userId, userEmail, userNickName, likeCount, hitCount, delimitedTagList, createDate);
+        super(channelId, category, title, userEmail, userNickName, likeCount, hitCount, delimitedTagList, createDate);
         this.fanartId = boardId;
         this.fanartThumbnailImageUrl = fanartThumbnailImageUrl;
     }

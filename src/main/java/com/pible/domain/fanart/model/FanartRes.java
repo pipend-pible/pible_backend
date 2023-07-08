@@ -15,7 +15,7 @@ import java.util.List;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class FanartRes extends FanartDto{
+public class FanartRes extends FanartDto {
     @NotNull
     private Long fanartId;
     private List<String> imageUrlList;

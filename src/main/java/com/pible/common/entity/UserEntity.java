@@ -37,13 +37,16 @@ public class UserEntity extends BaseEntity {
     private String nickName;
 
     @Convert(converter = YNConverter.class)
+    @Builder.Default
     private String verifyAgeYn = NO;
 
     @Convert(converter = YNConverter.class)
+    @Builder.Default
     private String privacyAgreeYn = NO;
     private String userState;
 
     @Convert(converter = YNConverter.class)
+    @Builder.Default
     private String bankAccountYn = NO;
 
     private LocalDateTime deleteDate;

@@ -36,7 +36,6 @@ public class BoardRepositoryImpl extends QuerydslRepositorySupport implements Cu
                         channelEntity.id,
                         boardCategoryEntity.categoryName.as("category"),
                         boardEntity.title,
-                        userEntity.id,
                         userEntity.email,
                         userEntity.nickName,
                         boardEntity.likeCount,

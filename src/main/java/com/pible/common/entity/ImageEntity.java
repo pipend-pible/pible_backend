@@ -29,6 +29,7 @@ public class ImageEntity {
     private String oriImageName;
 
     @Convert(converter = YNConverter.class)
+    @Builder.Default
     private String repImageYn = NO;
 
     @Convert(converter = YNConverter.class)

@@ -49,7 +49,7 @@ public class BoardServiceImpl implements BoardService {
 
         boardEntity.setRelation(
                 channelRepository.getReferenceById(boardDto.getChannelId()),
-                userRepository.getReferenceById(SecurityUtils.getUserId()),
+                userRepository.findById(SecurityUtils.getUserId()).orElseThrow(),
                 boardCategoryRepository.getReferenceById(boardDto.getBoardCategoryId())
         );
 

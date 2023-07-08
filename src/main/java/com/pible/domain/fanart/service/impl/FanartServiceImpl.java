@@ -50,7 +50,7 @@ public class FanartServiceImpl implements FanartService {
 
         fanartEntity.setRelation(
                 channelRepository.getReferenceById(fanartDto.getChannelId()),
-                userRepository.getReferenceById(SecurityUtils.getUserId()),
+                userRepository.findById(SecurityUtils.getUserId()).orElseThrow(),
                 fanartCategoryRepository.getReferenceById(fanartDto.getFanartCategoryId())
         );
 

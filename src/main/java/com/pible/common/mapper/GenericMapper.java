@@ -19,6 +19,11 @@ public interface GenericMapper<E, D> {
         return userEntity.getId();
     }
 
+    @Named("userEntityToUserNickName")
+    default String userEntityToUserNickName(UserEntity userEntity) {
+        return userEntity.getNickName();
+    }
+
     @Named("channelEntityToId")
     default Long channelEntityToId(ChannelEntity channelEntity) {
         return channelEntity.getId();

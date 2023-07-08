@@ -30,6 +30,7 @@ public class CommentEntity extends BaseEntity {
     private String content;
 
     @Convert(converter = YNConverter.class)
+    @Builder.Default
     private String anonymousYn = NO;
     private int likeCount;
     private int claimCount;

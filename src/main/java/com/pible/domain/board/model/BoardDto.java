@@ -18,7 +18,7 @@ import java.util.List;
 public class BoardDto {
     @NotNull
     private Long channelId;
-    private Long userId;
+    private String userNickName;
     @NotNull
     private Long boardCategoryId;
     @NotEmpty

@@ -17,7 +17,6 @@ public class ContentRes {
     private Long channelId;
     private String category;
     private String title;
-    private Long userId;
     private String userEmail;
     private String userNickName;
     private Integer likeCount;
@@ -25,13 +24,12 @@ public class ContentRes {
     private List<String> tagList;
     private LocalDateTime createDate;
 
-    public ContentRes(Long channelId, String category, String title, Long userId,
+    public ContentRes(Long channelId, String category, String title,
                       String userEmail, String userNickName, Integer likeCount, Integer hitCount, String delimitedTagList,
                       LocalDateTime createDate) {
         this.channelId = channelId;
         this.category = category;
         this.title = title;
-        this.userId = userId;
         this.userEmail = userEmail;
         this.userNickName = userNickName;
         this.likeCount = likeCount;

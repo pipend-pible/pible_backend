@@ -16,7 +16,7 @@ public interface BoardMapper extends GenericMapper<BoardEntity, BoardDto> {
     BoardMapper INSTANCE = Mappers.getMapper(BoardMapper.class);
 
     @Mapping(source = "id", target = "boardId")
-    @Mapping(source = "userEntity", target = "userId", qualifiedByName = "userEntityToId")
+    @Mapping(source = "userEntity", target = "userNickName", qualifiedByName = "userEntityToUserNickName")
     @Mapping(source = "channelEntity", target = "channelId", qualifiedByName = "channelEntityToId")
     @Mapping(source = "boardCategoryEntity", target = "boardCategoryId", qualifiedByName = "boardCategoryEntityToId")
     BoardRes entityToBoardRes(BoardEntity entity);

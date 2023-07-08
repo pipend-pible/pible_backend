@@ -36,12 +36,15 @@ public class BoardEntity extends BaseEntity{
     private int disLikeCount;
     private int hitCount;
     @Convert(converter = YNConverter.class)
+    @Builder.Default
     private String anonymousYn = NO;
 
     @Convert(converter = YNConverter.class)
+    @Builder.Default
     private String displayYn = YES;
 
     @Convert(converter = YNConverter.class)
+    @Builder.Default
     private String adultYn = NO;
 
     @ManyToOne(fetch = FetchType.LAZY)

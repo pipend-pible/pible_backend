@@ -15,7 +15,7 @@ import java.util.List;
 public interface FanartMapper extends GenericMapper<FanartEntity, FanartDto> {
     FanartMapper INSTANCE = Mappers.getMapper(FanartMapper.class);
     @Mapping(source = "id", target = "fanartId")
-    @Mapping(source = "userEntity", target = "userId", qualifiedByName = "userEntityToId")
+    @Mapping(source = "userEntity", target = "userNickName", qualifiedByName = "userEntityToUserNickName")
     @Mapping(source = "channelEntity", target = "channelId", qualifiedByName = "channelEntityToId")
     @Mapping(source = "fanartCategoryEntity", target = "fanartCategoryId", qualifiedByName = "fanartCategoryEntityToId")
     FanartRes entityToFanartRes(FanartEntity entity);
