@@ -16,9 +16,6 @@ spring:
     username: ENC(vkvw/0/n4eOIJD4LXK+LJoisA5pQbKSh)
     password: ENC(FgcWynD6Vro43/Bp7LvktQmfN+x+raR8)
     url: jdbc:postgresql://pible-database.cb7shsiteird.ap-northeast-2.rds.amazonaws.com:5432/pible
-  config:
-    activate:
-      on-profile: prod
   jackson:
     property-naming-strategy: SNAKE_CASE
   cache:
