@@ -13,22 +13,22 @@ spring:
     database-platform: com.pible.config.database.CustomPGDialect
   datasource:
     driver-class-name: org.postgresql.Driver
-    username: ENC(vkvw/0/n4eOIJD4LXK+LJoisA5pQbKSh)
-    password: ENC(FgcWynD6Vro43/Bp7LvktQmfN+x+raR8)
-    url: jdbc:postgresql://pible-database.cb7shsiteird.ap-northeast-2.rds.amazonaws.com:5432/pible
+    username: postgres
+    password: ENC(K2kw1O8ByRStli2Fp6bjXQ==)
+    url: jdbc:postgresql://localhost:5432/postgres
   config:
     activate:
-      on-profile: prod
+      on-profile: local
   jackson:
     property-naming-strategy: SNAKE_CASE
   cache:
     jcache:
       config: classpath:ehcache.xml
   mail:
-    host: smtps.hiworks.com
-    port: 465
-    username: ENC(zuBe12rIgGPEdtoIGO7RuBLLwa99sQ4E)
-    password: ENC(0+QKaTkrmTo3uejQSbMCPF18loLedS/8)
+    host: smtp.gmail.com
+    port: 587
+    username: ENC(zNRrOjuRwMVS5YKn0PnFF420NqtVraFUndKJxRAQ4V9do9pHXw6aFA==)
+    password: ENC(pNnyGh0JmlpsjELXqmSzRAVrNPKl5ex2tByPIpchr7k=)
     properties:
       mail:
         smtp:
@@ -40,7 +40,7 @@ security:
   ignore:
     url: /auth/**, /login/**
   cors:
-    origin: https://www.pible.net
+    origin: http://localhost:8081
 
 jasypt:
   encryptor:
