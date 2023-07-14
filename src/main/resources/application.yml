@@ -24,11 +24,13 @@ spring:
   mail:
     host: smtps.hiworks.com
     port: 465
-    username: ENC(zuBe12rIgGPEdtoIGO7RuBLLwa99sQ4E)
-    password: ENC(0+QKaTkrmTo3uejQSbMCPF18loLedS/8)
+    username: ENC(2vg9wUvdis9kbLHKmGopMWU5cs8F+JyajdAr/HqYI1E=)
+    password: ENC(Tn2JzyugcRwQLb/MSmlCNBsrisbxPrj6)
     properties:
       mail:
         smtp:
+          ssl:
+            enable: true
           starttls:
             enable: true
           auth: true

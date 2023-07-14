@@ -20,11 +20,11 @@ import static com.pible.common.Constants.NO;
 @AllArgsConstructor
 @NoArgsConstructor
 @DynamicUpdate
-@SequenceGenerator(allocationSize = 1, name = "userSequence", sequenceName = "user_sequence", schema = "pible")
+@SequenceGenerator(allocationSize = 1, name = "accountSequence", sequenceName = "account_sequence", schema = "pible")
 public class UserEntity extends BaseEntity {
 
     @Id
-    @GeneratedValue(generator = "userSequence")
+    @GeneratedValue(generator = "accountSequence")
     @Column(name = "user_id")
     private Long id;
     @Column(unique = true)

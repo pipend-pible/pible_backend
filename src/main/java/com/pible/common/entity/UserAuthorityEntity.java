@@ -19,7 +19,7 @@ import javax.persistence.*;
 public class UserAuthorityEntity {
 
     @Id
-    @GeneratedValue(generator = "userSequence")
+    @GeneratedValue(generator = "userAuthoritySequence")
     @Column(name = "user_authority_id")
     private long id;
 
