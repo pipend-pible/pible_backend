@@ -10,6 +10,7 @@ spring:
         format_sql: true
     hibernate:
       ddl-auto: none
+    # string_agg 라는 postgresql function을 사용하기 위해 등록한 설정입니다.
     database-platform: com.pible.config.database.CustomPGDialect
   datasource:
     driver-class-name: org.postgresql.Driver
@@ -18,9 +19,11 @@ spring:
     url: jdbc:postgresql://pible-database.cb7shsiteird.ap-northeast-2.rds.amazonaws.com:5432/pible
   jackson:
     property-naming-strategy: SNAKE_CASE
+  # 인증 작업시 캐시를 활용하기 위해 설정한 값입니다. 어플리케이션 캐시가 아닌 레디스같은 다른 방안으로 변경 가능합니다.
   cache:
     jcache:
       config: classpath:ehcache.xml
+  # 인증용 메일 발송을 위한 설정입니다.
   mail:
     host: smtps.hiworks.com
     port: 465
@@ -41,10 +44,12 @@ security:
   cors:
     origin: https://www.pible.net
 
+# 프로퍼티값 암호화를 위한 설정입니다.
 jasypt:
   encryptor:
     bean: jasyptStringEncryptor
 
+# 이미지 호스팅을 위한 cloudinary 라는 솔루션입니다. 무료 버젼으로 사용중이며 임시 작업이었기 때문에 더 효율적인 방안으로 변경 가능합니다.
 cloudinary:
   name: ENC(2A4qr0WEccNANg/9oFGvYMeeg2Z637iJ)
   key: ENC(k5MEfPT2KeyLomd6HuhkAmNV8Uou0uOk)

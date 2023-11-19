@@ -62,6 +62,7 @@ public class ChannelServiceImpl implements ChannelService {
         return channelRepository.findAll().stream().map(channelMapper::entityToChannelRes).collect(Collectors.toList());
     }
 
+    // 게시글과 팬아트는 동일한 속성의 값이 많기 때문에 ContentRes 라는 공통의 응답 포맷을 사용합니다.
     @Override
     public List<? extends ContentRes> getChannelContents(Long channelId, ContentDto contentDto) {
         ChannelEntity channelEntity = channelRepository.findById(channelId).orElseThrow(() -> new BusinessException(ResponseCode.NO_DATA));
@@ -81,6 +82,8 @@ public class ChannelServiceImpl implements ChannelService {
                 .collect(Collectors.toList());
     }
 
+    // 채널별 게시글 / 팬아트 별 총 조회수를 계산하기 위한 작업입니다.
+    // 월요일 오전 6시에 동작합니다.
     @Scheduled(cron = "0 0 6 * * 1")
     @Transactional
     public void calculateTotalCount() {

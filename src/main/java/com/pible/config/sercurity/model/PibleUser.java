@@ -12,6 +12,7 @@ import java.util.List;
 
 @Getter
 @Setter
+// security 유저 정보에 닉네임과 User 엔티티의 id 값을 추가하였습니다.
 public class PibleUser extends User {
     private String userNickName;
     private Long userId;

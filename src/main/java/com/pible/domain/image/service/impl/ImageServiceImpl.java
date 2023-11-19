@@ -37,6 +37,7 @@ public class ImageServiceImpl implements ImageService {
 
         List<ImageEntity> imageEntityList = new ArrayList<>();
 
+        // 반복문만큼 이미지가 업로드되기 때문에 화면단에 응답시간이 늦어질 경우 추가적인 개선 작업이 필요할 수 있습니다.
         for(MultipartFile file : multipartFileList) {
             String fileUrl = generateFile(file);
 
@@ -73,6 +74,7 @@ public class ImageServiceImpl implements ImageService {
         );
     }
 
+    // cloudinary 에 이미지를 업로드하고 생성된 url을 가져옵니다.
     private String generateFile(MultipartFile file) {
         String fileUrl;
 

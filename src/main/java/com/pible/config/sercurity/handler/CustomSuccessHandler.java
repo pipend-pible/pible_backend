@@ -22,6 +22,7 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
     private final JwtUtils jwtUtils;
     private final ObjectMapper objectMapper;
 
+    // 로그인 성공시 토큰을 발행합니다.
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         PibleUser pibleUser = (PibleUser) authentication.getPrincipal();

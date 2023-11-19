@@ -13,6 +13,7 @@ import java.util.Map;
 @Component
 @RequiredArgsConstructor
 @Slf4j
+// 이미지 호스팅 솔루션 cloudinary 사용을 위한 설정입니다.
 public class CloudinaryUtils {
     private static Cloudinary cloudinary;
     private final CloudinaryProperties cloudinaryProperties;

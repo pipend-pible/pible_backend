@@ -45,6 +45,7 @@ public class FanartServiceImpl implements FanartService {
 
     @Override
     @Transactional
+    // 팬아트도 게시글과 마찬가지로 다른 테이블과의 연관관계, 태그, 이미지 관련 작업들이 추가되었습니다.
     public FanartRes saveFanart(List<MultipartFile> multipartFileList, MultipartFile multipartFile, FanartDto fanartDto) {
         FanartEntity fanartEntity = fanartMapper.dtoToEntity(fanartDto);
 
@@ -56,6 +57,7 @@ public class FanartServiceImpl implements FanartService {
 
         fanartEntity = fanartRepository.save(fanartEntity);
 
+        // 팬아트는 게시글과 다르게 썸네일 이라는 별도의 이미지파일을 받아 사용합니다.
         imageService.uploadImageFiles(multipartFileList, null, fanartEntity);
         imageService.uploadThumbnail(multipartFile, fanartEntity);
 

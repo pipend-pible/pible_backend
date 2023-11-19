@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
+// 프로퍼티값 암호화를 위한 설정입니다.
 public class JasyptConfig {
 
     @Value("${jasypt.encryptor.password}")

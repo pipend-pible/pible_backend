@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
 @Converter
+// 프론트에 DB와는 다른 형식으로 시간값을 보내기위한 설정입니다.
 public class DateTimeConverter implements AttributeConverter<LocalDateTime, Timestamp> {
     @Override
     public Timestamp convertToDatabaseColumn(LocalDateTime attribute) {

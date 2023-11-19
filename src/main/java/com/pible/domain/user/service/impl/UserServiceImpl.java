@@ -50,11 +50,13 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByEmail(userName).isPresent();
     }
 
+    // 회원가입 검증용 jwt를 발행합니다.
     @Override
     public String generateSignUpToken(String userName) {
         return jwtUtils.createToken(userName, null, 3 * 60 * 1000);
     }
 
+    // 회원가입 검증을 위해 이메일로 보내지는 코드값을 어플리케이션 캐시에 저장합니다.
     @Override
     @Cacheable(value = EHCACHE_KEY_NAME, key = "#userName")
     public String generateEmailAuthStr(String userName) {
@@ -72,12 +74,13 @@ public class UserServiceImpl implements UserService {
 
         Cache<String, String> cache = getCache();
         if(cache == null || cache.get(userName) == null) {
-//            exception 추가
+        // TODO exception 추가가 필요할 수 있습니다.
             return false;
         }
 
         boolean isSuccess = cache.get(userName).equals(verifyCode);
 
+        // 캐시에 저장된 코드값과 동일할 경우 인증이 되었기때문에 캐시를 무효화합니다.
         if(isSuccess) {
             cache.remove(userName);
         }

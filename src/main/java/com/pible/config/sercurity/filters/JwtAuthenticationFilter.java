@@ -23,6 +23,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Slf4j
+// 인증 방식으로 jwt 를 선택했기 때문에 매 요청마다 토큰을 검증합니다.
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtUtils jwtUtils;
     private final String[] ignored;
@@ -41,12 +42,16 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 return;
             }
 
+            // 토큰 데이터 추출을 위한 로직입니다. 토큰을 발행할 때와 달리
+            // 토큰에서 데이터를 추출할때 List<LinkedHashMap<String, String>> 타입으로 추출되어 추가적인 처리를 했습니다.
+            // 불필요한 작업일 경우 개선이 필요합니다.
             Claims claims = jwtUtils.getData(jwt);
             String nickName = String.valueOf(claims.get("nickName"));
             Long userId = Long.parseLong(String.valueOf(claims.get("if")));
             List<LinkedHashMap<String, String>> linkedAuthorities = (List<LinkedHashMap<String, String>>) claims.get("authorities");
             Set<GrantedAuthority> authorities = linkedAuthorities.stream().flatMap(linkedHashMap -> linkedHashMap.values().stream().map(SimpleGrantedAuthority::new)).collect(Collectors.toSet());
 
+            // 토큰 검증 후 토큰의 데이터를 이용하여 authentication 정보를 할당합니다.
             PibleUser pibleUser = new PibleUser(claims.getSubject(), "temporal", authorities, nickName, userId);
             UserAuthenticationToken authenticationToken = new UserAuthenticationToken(pibleUser);
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);

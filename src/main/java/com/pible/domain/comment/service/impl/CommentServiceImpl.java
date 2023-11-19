@@ -33,7 +33,7 @@ public class CommentServiceImpl implements CommentService {
     private final UserRepository userRepository;
     private final CommentMapper commentMapper = CommentMapper.INSTANCE;
 
-    // TODO 댓글 포함 모든 리스트 조회는 페이징이 필요한 경우 pageable 사용하도록 수정해야하고 정렬작업도 pageable 이용해서 DB단에서 처리되도록 수정해야함
+    // TODO 댓글 포함 모든 리스트 조회는 페이징이 필요한 경우 pageable 사용하도록 수정해야하고 정렬작업도 pageable 이용해서 DB단에서 처리되도록 수정해야합니다.
     @Override
     public List<CommentRes> getBoardCommentList(Long boardId) {
         return commentRepository.findAllByBoardEntity(
@@ -60,6 +60,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     @Transactional
+    // 게시글과 팬아트의 댓글 관리를 위해 분기처리 하는 로직이 추가되었습니다.
     public CommentRes createComment(CommentDto commentDto) {
         BoardEntity boardEntity = null;
         FanartEntity fanartEntity = null;

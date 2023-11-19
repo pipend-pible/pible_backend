@@ -42,6 +42,7 @@ public class BoardServiceImpl implements BoardService {
     private final ImageService imageService;
     private final BoardMapper boardMapper = BoardMapper.INSTANCE;
 
+    // 게시글을 저장합니다. 게시글은 채널, 유저, 게시글 카테고리와 연관관계가 있습니다.
     @Override
     @Transactional
     public BoardRes saveBoard(List<MultipartFile> multipartFileList, BoardDto boardDto) {
@@ -55,17 +56,20 @@ public class BoardServiceImpl implements BoardService {
 
         boardEntity = boardRepository.save(boardEntity);
 
+        // 게시글에 이미지가 있을경우 이미지를 업로드 합니다.
         imageService.uploadImageFiles(multipartFileList, boardEntity, null);
 
         if(CollectionUtils.isEmpty(boardDto.getTagList())) {
             return boardMapper.entityToBoardRes(boardEntity);
         }
 
+        // 게시글에 태그가 추가될때마다 태그를 관리하는 테이블에 있는지 확인하고 없으면 추가하는 과정을 거칩니다.
         for(String tag : boardDto.getTagList()) {
             TagEntity tagEntity = tagRepository.findByTag(tag).orElseGet(
                     () -> tagRepository.save(TagEntity.builder().tag(tag).build())
             );
 
+            // 게시글과 태그는 N:M 관계입니다.
             boardTagMappingRepository.save(BoradTagMappingEntity.builder()
                     .boardEntity(boardEntity)
                     .tagEntity(tagEntity)

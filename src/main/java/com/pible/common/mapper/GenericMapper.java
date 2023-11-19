@@ -6,6 +6,7 @@ import org.mapstruct.MappingTarget;
 import org.mapstruct.Named;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 
+// dto, entity 간 매핑을 위한 mapstruct 기본 인터페이스입니다.
 public interface GenericMapper<E, D> {
 
     D entityToDto(E entity);

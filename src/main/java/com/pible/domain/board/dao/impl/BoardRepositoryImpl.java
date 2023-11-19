@@ -40,6 +40,7 @@ public class BoardRepositoryImpl extends QuerydslRepositorySupport implements Cu
                         userEntity.nickName,
                         boardEntity.likeCount,
                         boardEntity.hitCount,
+                        // 게시글 조회시 태그목록을 flat 하여 가져오기 위한 설정입니다.
                         Expressions.stringTemplate("string_agg({0}, {1})", tagEntity.tag.coalesce(""), ",").as("tagList"),
                         boardEntity.createDate,
                         boardEntity.id

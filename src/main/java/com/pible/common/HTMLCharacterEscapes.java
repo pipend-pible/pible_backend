@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.io.CharacterEscapes;
 import com.fasterxml.jackson.core.io.SerializedString;
 import org.apache.commons.text.StringEscapeUtils;
 
+// XSS 방지를 위한 설정값 클래스입니다.
 public class HTMLCharacterEscapes extends CharacterEscapes {
     private final int[] asciiEscapes;
 
