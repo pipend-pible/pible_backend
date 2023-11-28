@@ -42,7 +42,7 @@ security:
   ignore:
     url: /auth/**, /login/**
   cors:
-    origin: https://www.pible.net
+    origin: https://pible.net
 
 # 프로퍼티값 암호화를 위한 설정입니다.
 jasypt:
